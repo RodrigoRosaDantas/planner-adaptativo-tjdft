@@ -1,40 +1,62 @@
 (() => {
   "use strict";
 
-  const STORAGE_KEY = "planner-adaptativo-tjdft:sessions:v1";
-  const CARGO_KEY = "planner-adaptativo-tjdft:cargo";
-  const titles = {
-    hoje: "O que estudar agora?",
-    mapa: "Mapa adaptativo do edital",
-    trilha: "Trilha de estudo",
-    simulador: "Simulador de blueprint",
-    registro: "Registrar evidência"
+  const KEYS = {
+    sessions: "planner-adaptativo-tjdft:sessions:v2",
+    notes: "planner-adaptativo-tjdft:notes:v1",
+    cargo: "planner-adaptativo-tjdft:cargo:v1"
+  };
+
+  const VIEW_TITLES = {
+    overview: "Visão Geral",
+    register: "Registro de Estudo",
+    timer: "Timer",
+    charts: "Gráficos",
+    schedule: "Cronograma",
+    progress: "Progresso",
+    simulator: "Simulador",
+    notes: "Anotações",
+    subjects: "Disciplinas"
   };
 
   const state = {
     seed: null,
-    cargo: localStorage.getItem(CARGO_KEY) || "tecnico",
-    localSessions: readJson(STORAGE_KEY, []),
-    simulatorText: ""
+    cargo: localStorage.getItem(KEYS.cargo) || "tecnico",
+    sessions: read(KEYS.sessions, []),
+    notes: read(KEYS.notes, []),
+    timer: {
+      mode: "stopwatch",
+      running: false,
+      seconds: 0,
+      target: 0,
+      interval: null
+    },
+    simText: ""
   };
 
-  const $ = (selector) => document.querySelector(selector);
-  const $$ = (selector) => [...document.querySelectorAll(selector)];
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
 
-  function readJson(key, fallback) {
+  function read(key, fallback) {
     try {
-      const value = JSON.parse(localStorage.getItem(key));
-      return value ?? fallback;
-    } catch {
+      const parsed = JSON.parse(localStorage.getItem(key));
+      return parsed == null ? fallback : parsed;
+    } catch (_) {
       return fallback;
     }
   }
 
-  function fmtDate(value) {
-    if (!value) return "—";
-    const raw = String(value).slice(0, 10);
-    const [y, m, d] = raw.split("-");
-    return y && m && d ? `${d}/${m}/${y}` : value;
+  function write(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  function esc(value) {
+    return String(value == null ? "" : value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
   function todayIso() {
@@ -43,254 +65,698 @@
     return local.toISOString().slice(0, 10);
   }
 
-  function pct(value, digits = 0) {
-    return Number.isFinite(value) ? `${(value * 100).toFixed(digits)}%` : "—";
+  function parseDay(value) {
+    if (!value) return null;
+    const raw = String(value).slice(0, 10);
+    const d = new Date(raw + "T12:00:00");
+    return Number.isNaN(d.getTime()) ? null : d;
   }
 
-  function escapeHtml(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  function addDays(value, n) {
+    const d = parseDay(value);
+    if (!d) return null;
+    d.setDate(d.getDate() + n);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function dayDiff(a, b) {
+    const da = parseDay(a);
+    const db = parseDay(b);
+    if (!da || !db) return null;
+    return Math.round((db - da) / 86400000);
+  }
+
+  function fmtDate(value) {
+    if (!value) return "—";
+    const raw = String(value).slice(0, 10).split("-");
+    return raw.length === 3 ? raw[2] + "/" + raw[1] + "/" + raw[0] : String(value);
+  }
+
+  function percent(value, digits) {
+    if (!Number.isFinite(value)) return "—";
+    return (value * 100).toFixed(digits == null ? 0 : digits) + "%";
+  }
+
+  function hours(minutes) {
+    const value = Number(minutes || 0) / 60;
+    return value < 10 ? value.toFixed(1) + "h" : Math.round(value) + "h";
   }
 
   function toast(message) {
-    const el = document.createElement("div");
-    el.className = "toast";
+    const el = $("#toast");
     el.textContent = message;
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 2600);
+    el.classList.add("show");
+    window.clearTimeout(el._hide);
+    el._hide = window.setTimeout(() => el.classList.remove("show"), 2400);
   }
 
-  function switchView(view) {
-    $$(".view").forEach((el) => el.classList.toggle("active", el.id === `view-${view}`));
-    $$(".nav-item").forEach((el) => el.classList.toggle("active", el.dataset.view === view));
-    $("#pageTitle").textContent = titles[view] || titles.hoje;
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  function unitSubject(code) {
+    if (/^P\d+/.test(code || "")) return "Língua Portuguesa";
+    if (/^RL\d+/.test(code || "")) return "Raciocínio Lógico-Matemático";
+    if (/^REV\d+/.test(code || "")) return "Revisão integrada";
+    return "Núcleo comum";
+  }
+
+  function selectedCargo() {
+    return state.seed.cargos[state.cargo];
+  }
+
+  function importedSessions() {
+    return (state.seed.importedSessions || []).map((s) => ({
+      id: s.id,
+      origin: "importado",
+      category: "Questões",
+      code: s.code,
+      subject: unitSubject(s.code),
+      date: s.date,
+      minutes: Number(s.minutes || 0),
+      questions: Number(s.questions || 0),
+      correct: Number(s.correct || 0),
+      errors: Number(s.errors || 0),
+      notes: ""
+    }));
   }
 
   function allSessions() {
-    return [...(state.seed?.importedSessions || []), ...state.localSessions];
+    return importedSessions().concat(state.sessions);
   }
 
-  function statsForCode(code) {
-    const sessions = allSessions().filter((s) => s.code === code);
-    return sessions.reduce(
-      (acc, s) => {
-        acc.questions += Number(s.questions || 0);
-        acc.correct += Number(s.correct || 0);
-        acc.errors += Number(s.errors ?? Math.max(0, Number(s.questions || 0) - Number(s.correct || 0)));
-        acc.minutes += Number(s.minutes || 0);
-        acc.sessions += 1;
-        return acc;
-      },
-      { questions: 0, correct: 0, errors: 0, minutes: 0, sessions: 0 }
-    );
+  function unitSessions(code) {
+    return allSessions().filter((s) => s.code === code);
   }
 
-  function globalStats() {
-    return allSessions().reduce(
-      (acc, s) => {
-        acc.questions += Number(s.questions || 0);
-        acc.correct += Number(s.correct || 0);
-        acc.errors += Number(s.errors ?? Math.max(0, Number(s.questions || 0) - Number(s.correct || 0)));
-        acc.minutes += Number(s.minutes || 0);
-        acc.sessions += 1;
-        return acc;
-      },
-      { questions: 0, correct: 0, errors: 0, minutes: 0, sessions: 0 }
-    );
+  function unitStats(code) {
+    return unitSessions(code).reduce((acc, s) => {
+      acc.sessions += 1;
+      acc.minutes += Number(s.minutes || 0);
+      acc.questions += Number(s.questions || 0);
+      acc.correct += Number(s.correct || 0);
+      acc.errors += Number(s.errors != null ? s.errors : Math.max(0, Number(s.questions || 0) - Number(s.correct || 0)));
+      return acc;
+    }, { sessions: 0, minutes: 0, questions: 0, correct: 0, errors: 0 });
+  }
+
+  function globalStats(sessions) {
+    return (sessions || allSessions()).reduce((acc, s) => {
+      acc.sessions += 1;
+      acc.minutes += Number(s.minutes || 0);
+      acc.questions += Number(s.questions || 0);
+      acc.correct += Number(s.correct || 0);
+      acc.errors += Number(s.errors != null ? s.errors : Math.max(0, Number(s.questions || 0) - Number(s.correct || 0)));
+      return acc;
+    }, { sessions: 0, minutes: 0, questions: 0, correct: 0, errors: 0 });
+  }
+
+  function lastStudyDate(item) {
+    const local = state.sessions
+      .filter((s) => s.code === item.code && !String(s.category || "").startsWith("Revisão"))
+      .map((s) => String(s.date || "").slice(0, 10))
+      .filter(Boolean)
+      .sort()
+      .pop();
+    return local || (item.last_execution ? String(item.last_execution).slice(0, 10) : null);
+  }
+
+  function reviewCompleted(item, label) {
+    const prop = label.toLowerCase();
+    if (item[prop] === true) return true;
+    return state.sessions.some((s) => s.code === item.code && String(s.category || "").toLowerCase() === ("revisão " + label).toLowerCase());
+  }
+
+  function reviewEvents(item) {
+    const base = lastStudyDate(item);
+    if (!base) return [];
+    return [
+      { label: "D0", date: base, done: reviewCompleted(item, "D0") },
+      { label: "D7", date: addDays(base, 7), done: reviewCompleted(item, "D7") },
+      { label: "D20", date: addDays(base, 20), done: reviewCompleted(item, "D20") }
+    ];
   }
 
   function priorityValue(item) {
-    const scale = state.seed.scoringPolicy.editorialPriorityScale;
-    return scale[item.priority] ?? 0.55;
+    const scale = state.seed.scoringPolicy.editorialPriorityScale || {};
+    return Number(scale[item.priority] == null ? 0.55 : scale[item.priority]);
   }
 
   function reviewUrgency(item) {
-    const today = new Date(`${todayIso()}T12:00:00`);
-    if (item.next_review) {
-      const due = new Date(item.next_review);
-      const diff = Math.ceil((due - today) / 86400000);
-      if (diff <= 0) return 1;
-      if (diff <= 2) return 0.82;
-      if (diff <= 7) return 0.58;
-      return 0.28;
-    }
-    if (item.last_execution && !item.d0) return 0.78;
-    if (item.state !== "Não estudado") return 0.58;
-    return 0.26;
+    const pending = reviewEvents(item).filter((x) => !x.done);
+    if (!pending.length) return item.state === "Não estudado" ? 0.22 : 0.35;
+    const today = todayIso();
+    const diffs = pending.map((x) => dayDiff(today, x.date)).filter((x) => x != null);
+    if (!diffs.length) return 0.35;
+    const earliest = Math.min.apply(null, diffs);
+    if (earliest <= 0) return 1;
+    if (earliest <= 2) return 0.82;
+    if (earliest <= 7) return 0.6;
+    return 0.32;
   }
 
-  function itemScore(item) {
-    const stats = statsForCode(item.code);
+  function scoreItem(item) {
+    const stats = unitStats(item.code);
     const accuracy = stats.questions ? stats.correct / stats.questions : null;
-    const weakness = accuracy === null ? state.seed.scoringPolicy.unknownWeakness : 1 - accuracy;
+    const weakness = accuracy == null ? Number(state.seed.scoringPolicy.unknownWeakness || 0.55) : 1 - accuracy;
     const priority = priorityValue(item);
     const review = reviewUrgency(item);
-    const w = state.seed.scoringPolicy.weights;
-    const score = Math.round((priority * w.editorialPriority + weakness * w.weakness + review * w.reviewUrgency) * 100);
+    const weights = state.seed.scoringPolicy.weights || { editorialPriority: 0.45, weakness: 0.35, reviewUrgency: 0.20 };
+    const score = Math.round(100 * (
+      priority * Number(weights.editorialPriority || 0.45) +
+      weakness * Number(weights.weakness || 0.35) +
+      review * Number(weights.reviewUrgency || 0.20)
+    ));
     return { item, stats, accuracy, weakness, priority, review, score };
   }
 
   function rankedTrail() {
-    return state.seed.trail.items
-      .map(itemScore)
-      .sort((a, b) => b.score - a.score || a.item.order - b.item.order);
+    return (state.seed.trail.items || []).map(scoreItem).sort((a, b) => b.score - a.score || a.item.order - b.item.order);
   }
 
-  function recommendationReasons(entry) {
+  function reason(entry) {
     const parts = [];
-    if (entry.item.next_review && reviewUrgency(entry.item) >= 1) parts.push("revisão vencida");
-    if (entry.accuracy !== null && entry.accuracy < 0.7) parts.push(`aproveitamento em ${pct(entry.accuracy)}`);
-    if (entry.item.priority === "Muito alta") parts.push("prioridade editorial muito alta");
-    if (entry.stats.questions === 0) parts.push("ainda sem desempenho medido");
+    const overdue = reviewEvents(entry.item).some((x) => !x.done && dayDiff(todayIso(), x.date) <= 0);
+    if (overdue) parts.push("revisão vencida");
+    if (entry.accuracy != null && entry.accuracy < 0.7) parts.push("aproveitamento em " + percent(entry.accuracy));
+    if (entry.item.priority === "Muito alta") parts.push("prioridade estratégica muito alta");
+    if (entry.stats.questions === 0) parts.push("sem desempenho medido");
     if (entry.item.state === "Em aprendizagem") parts.push("conteúdo em aprendizagem");
-    return parts.length ? parts.join(" · ") : "melhor combinação de prioridade, fragilidade e revisão no momento";
+    return parts.length ? parts.join(" · ") : "melhor combinação entre prioridade, fragilidade e revisão";
   }
 
-  function renderMetrics() {
+  function metric(label, value, foot, icon) {
+    return '<div class="metric"><div class="metric-top"><span class="metric-label">' + esc(label) + '</span><span class="metric-icon">' + esc(icon || "•") + '</span></div><div class="metric-value">' + esc(value) + '</div><div class="metric-foot">' + esc(foot || "") + '</div></div>';
+  }
+
+  function openView(name) {
+    $$(".view").forEach((el) => el.classList.toggle("active", el.id === "view-" + name));
+    $$(".nav-item").forEach((el) => el.classList.toggle("active", el.dataset.view === name));
+    $("#viewTitle").textContent = VIEW_TITLES[name] || "Planner";
+    if (name === "charts") renderCharts();
+    if (name === "progress") renderProgress();
+    if (name === "subjects") renderSubjects();
+    if (name === "notes") renderNotes();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function renderSource() {
+    const sourceDate = state.seed.source.snapshotAsOf || state.seed.source.snapshotSyncedAt;
+    $("#sourceStatus").textContent = "Base TJDFT · " + fmtDate(sourceDate);
+  }
+
+  function currentWeekSessions() {
+    const now = parseDay(todayIso());
+    const weekday = (now.getDay() + 6) % 7;
+    const start = new Date(now);
+    start.setDate(start.getDate() - weekday);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+    return allSessions().filter((s) => {
+      const d = parseDay(s.date);
+      return d && d >= start && d <= end;
+    });
+  }
+
+  function renderOverview() {
     const g = globalStats();
     const accuracy = g.questions ? g.correct / g.questions : null;
-    const overdue = state.seed.trail.items.filter((i) => i.next_review && reviewUrgency(i) >= 1).length;
-    const studied = state.seed.trail.items.filter((i) => i.last_execution || statsForCode(i.code).sessions).length;
-    const metrics = [
-      ["Questões", g.questions, `${g.correct} acertos · ${g.errors} erros`],
-      ["Aproveitamento", accuracy === null ? "—" : pct(accuracy, 1), accuracy !== null && accuracy < .7 ? "atenção: abaixo de 70%" : "base + sessões locais"],
-      ["Trilha com evidência", `${studied}/${state.seed.trail.total}`, `${pct(studied / state.seed.trail.total)} da esteira`],
-      ["Revisões vencidas", overdue, overdue ? "pedem retorno agora" : "nenhuma vencida"]
-    ];
-    $("#metricGrid").innerHTML = metrics.map(([label, value, foot]) => `
-      <article class="metric-card">
-        <div class="metric-label">${escapeHtml(label)}</div>
-        <div class="metric-value">${escapeHtml(value)}</div>
-        <div class="metric-foot">${escapeHtml(foot)}</div>
-      </article>`).join("");
-  }
+    const studied = state.seed.trail.items.filter((i) => lastStudyDate(i) || unitStats(i.code).sessions).length;
+    const pendingReviews = getPendingReviews().filter((x) => x.due <= 0).length;
 
-  function renderRecommendation() {
+    $("#overviewMetrics").innerHTML =
+      metric("Tempo estudado", hours(g.minutes), g.sessions + " sessões registradas", "◷") +
+      metric("Questões", g.questions, g.correct + " acertos · " + g.errors + " erros", "✓") +
+      metric("Aproveitamento", accuracy == null ? "—" : percent(accuracy, 1), "base importada + registros locais", "%") +
+      metric("Progresso da trilha", studied + "/" + state.seed.trail.total, pendingReviews + " revisões vencidas", "◎");
+
     const best = rankedTrail()[0];
-    if (!best) return;
-    $("#recommendTitle").textContent = `${best.item.code} · ${best.item.title.replace(/^\w+\s+—\s+/, "")}`;
-    $("#recommendScore").textContent = best.score;
-    $("#recommendReason").textContent = recommendationReasons(best);
-    $("#recommendFactors").innerHTML = [
-      ["Prioridade", Math.round(best.priority * 100)],
-      ["Fragilidade", Math.round(best.weakness * 100)],
-      ["Revisão", Math.round(best.review * 100)]
-    ].map(([label, value]) => `<div class="factor"><strong>${value}</strong><span>${label}</span></div>`).join("");
-    $("#studyRecommendationBtn").dataset.code = best.item.code;
+    if (best) {
+      $("#focusTitle").textContent = best.item.code + " · " + best.item.title.replace(/^\w+\s+—\s+/, "");
+      $("#focusScore").textContent = best.score;
+      $("#focusReason").textContent = reason(best);
+      $("#focusBreakdown").innerHTML =
+        scoreBox("Prioridade", Math.round(best.priority * 100)) +
+        scoreBox("Fragilidade", Math.round(best.weakness * 100)) +
+        scoreBox("Revisão", Math.round(best.review * 100));
+      $("#focusStudyBtn").dataset.code = best.item.code;
+    }
+
+    renderWeeklyGoal();
+    renderAdaptiveQueue();
+    renderReviewList();
+    renderHeatmap();
+    renderOverviewBars();
   }
 
-  function renderQueue() {
-    $("#priorityQueue").innerHTML = rankedTrail().slice(0, 6).map((entry, index) => {
-      const due = entry.item.next_review && reviewUrgency(entry.item) >= 1;
-      const label = due ? "revisão vencida" : entry.accuracy === null ? "sem medida" : pct(entry.accuracy);
-      const tone = due || (entry.accuracy !== null && entry.accuracy < .7) ? "bad" : entry.accuracy === null ? "warn" : "good";
-      return `
-        <div class="priority-item">
-          <div class="rank-score">${entry.score}</div>
-          <div>
-            <strong>${escapeHtml(entry.item.code)} · ${escapeHtml(entry.item.title.replace(/^\w+\s+—\s+/, ""))}</strong>
-            <small>#${index + 1} · ${escapeHtml(recommendationReasons(entry))}</small>
-          </div>
-          <span class="pill ${tone}">${escapeHtml(label)}</span>
-        </div>`;
+  function scoreBox(label, value) {
+    return '<div class="score-item"><strong>' + value + '</strong><span>' + esc(label) + '</span></div>';
+  }
+
+  function renderWeeklyGoal() {
+    const week = currentWeekSessions();
+    const count = week.filter((s) => s.origin !== "importado" || s.date).length;
+    const goal = 5;
+    const value = Math.min(1, count / goal);
+    $("#weeklyGoalRing").style.background = "conic-gradient(var(--accent) 0 " + Math.round(value * 100) + "%,#eef0f5 " + Math.round(value * 100) + "% 100%)";
+    $("#weeklyGoalRing").querySelector("span").textContent = Math.round(value * 100) + "%";
+    $("#weeklyGoalText").textContent = count + " de " + goal + " sessões";
+    const stats = globalStats(week);
+    $("#weeklyMiniStats").innerHTML =
+      '<div class="mini-stat"><strong>' + hours(stats.minutes) + '</strong><span>tempo</span></div>' +
+      '<div class="mini-stat"><strong>' + stats.questions + '</strong><span>questões</span></div>';
+  }
+
+  function renderAdaptiveQueue() {
+    const list = rankedTrail().slice(0, 6);
+    $("#adaptiveQueue").innerHTML = list.map((entry) => {
+      let tone = "amber";
+      let label = "sem medida";
+      if (entry.accuracy != null) {
+        label = percent(entry.accuracy);
+        tone = entry.accuracy < 0.7 ? "red" : "green";
+      }
+      if (reviewEvents(entry.item).some((x) => !x.done && dayDiff(todayIso(), x.date) <= 0)) {
+        label = "revisar";
+        tone = "red";
+      }
+      return '<div class="queue-item">' +
+        '<div class="queue-score">' + entry.score + '</div>' +
+        '<div><strong>' + esc(entry.item.code + " · " + entry.item.title.replace(/^\w+\s+—\s+/, "")) + '</strong><small>' + esc(reason(entry)) + '</small></div>' +
+        '<span class="status-pill ' + tone + '">' + esc(label) + '</span>' +
+        '</div>';
     }).join("");
   }
 
-  function renderErrors() {
-    const errors = state.seed.baseline.errors.top || [];
-    $("#errorList").innerHTML = errors.slice(0, 6).map((e) => `
-      <div class="error-item">
-        <strong>${escapeHtml(e.topic)}</strong>
-        <small>${escapeHtml(e.action || "Revisar o padrão de erro.")}</small>
-        <small class="bad-text">Revisão: ${fmtDate(e.review_at)} · ${escapeHtml(e.state)}</small>
-      </div>`).join("") || '<div class="empty-state">Nenhum erro ativo.</div>';
-  }
-
-  function renderDomainMatrix() {
-    let attack = 0, maintain = 0, secondary = 0, unknown = 0;
+  function getPendingReviews() {
+    const rows = [];
     state.seed.trail.items.forEach((item) => {
-      const p = priorityValue(item);
-      const stats = statsForCode(item.code);
-      if (!stats.questions) {
-        unknown++;
-        return;
-      }
-      const acc = stats.correct / stats.questions;
-      if (p >= .8 && acc < .75) attack++;
-      else if (p >= .8 && acc >= .75) maintain++;
-      else secondary++;
-    });
-    const cells = [
-      ["q-attack", "Atacar", "Alta prioridade + desempenho baixo", attack],
-      ["q-maintain", "Manter", "Alta prioridade + desempenho bom", maintain],
-      ["q-secondary", "Secundário", "Baixa/média prioridade medida", secondary],
-      ["", "Sem medida", "Ainda sem questões suficientes", unknown]
-    ];
-    $("#domainMatrix").innerHTML = cells.map(([cls, title, desc, count]) => `
-      <div class="quadrant ${cls}">
-        <strong>${title}</strong><span>${desc}</span><b>${count}</b>
-      </div>`).join("");
-  }
-
-  function disciplineProgress(discipline) {
-    if (!String(discipline.canonicalSubject).includes("Língua Portuguesa")) return { done: 0, total: 0, value: null };
-    const portuguese = state.seed.trail.items.filter((x) => /^P\d+/.test(x.code));
-    const done = portuguese.filter((x) => x.last_execution || statsForCode(x.code).sessions).length;
-    return { done, total: portuguese.length, value: portuguese.length ? done / portuguese.length : null };
-  }
-
-  function renderMap() {
-    const cargo = state.seed.cargos[state.cargo];
-    const query = ($("#mapSearch").value || "").trim().toLowerCase();
-    $("#mapTitle").textContent = `Mapa do ${state.cargo === "tecnico" ? "Técnico" : "Analista"}`;
-
-    let disciplines = cargo.disciplines;
-    if (query) {
-      disciplines = disciplines.filter((d) => {
-        const hay = [
-          d.name, d.canonicalSubject,
-          ...(d.items || []).flatMap((i) => [i.topic, i.subtopic])
-        ].join(" ").toLowerCase();
-        return hay.includes(query);
+      reviewEvents(item).forEach((evt) => {
+        if (evt.done) return;
+        const due = dayDiff(todayIso(), evt.date);
+        if (due == null) return;
+        rows.push({ item, label: evt.label, date: evt.date, due });
       });
+    });
+    return rows.sort((a, b) => a.due - b.due || a.item.order - b.item.order);
+  }
+
+  function renderReviewList() {
+    const rows = getPendingReviews().slice(0, 7);
+    const overdue = rows.filter((x) => x.due <= 0).length;
+    $("#reviewCountPill").textContent = overdue + " vencidas";
+    $("#reviewList").innerHTML = rows.length ? rows.map((row) => {
+      const status = row.due < 0 ? Math.abs(row.due) + "d atrasada" : row.due === 0 ? "hoje" : "em " + row.due + "d";
+      const tone = row.due <= 0 ? "red" : row.due <= 2 ? "amber" : "blue";
+      return '<div class="review-item"><div><strong>' + esc(row.item.code + " · " + row.label) + '</strong><small>' + esc(row.item.title.replace(/^\w+\s+—\s+/, "")) + ' · ' + fmtDate(row.date) + '</small></div><span class="status-pill ' + tone + '">' + status + '</span></div>';
+    }).join("") : '<div class="empty">Nenhuma revisão calculável ainda.</div>';
+  }
+
+  function renderHeatmap() {
+    let critical = 0, strong = 0, medium = 0, unknown = 0;
+    state.seed.trail.items.forEach((item) => {
+      const entry = scoreItem(item);
+      if (!entry.stats.questions) return unknown++;
+      if (entry.priority >= 0.8 && entry.accuracy < 0.75) critical++;
+      else if (entry.priority >= 0.8 && entry.accuracy >= 0.75) strong++;
+      else medium++;
+    });
+    $("#heatmap").innerHTML =
+      heat("heat-critical", "Atacar", "prioridade alta + desempenho baixo", critical) +
+      heat("heat-strong", "Manter", "prioridade alta + desempenho bom", strong) +
+      heat("heat-medium", "Secundário", "prioridade média/baixa medida", medium) +
+      heat("heat-unknown", "Sem medida", "ainda sem evidência suficiente", unknown);
+  }
+
+  function heat(cls, title, text, count) {
+    return '<div class="heat-cell ' + cls + '"><strong>' + esc(title) + '</strong><span>' + esc(text) + '</span><b>' + count + '</b></div>';
+  }
+
+  function subjectStats() {
+    const map = new Map();
+    allSessions().forEach((s) => {
+      const subject = s.subject || unitSubject(s.code);
+      if (!map.has(subject)) map.set(subject, { subject, questions: 0, correct: 0, errors: 0, minutes: 0, sessions: 0 });
+      const x = map.get(subject);
+      x.questions += Number(s.questions || 0);
+      x.correct += Number(s.correct || 0);
+      x.errors += Number(s.errors || 0);
+      x.minutes += Number(s.minutes || 0);
+      x.sessions += 1;
+    });
+    return Array.from(map.values());
+  }
+
+  function renderOverviewBars() {
+    const rows = subjectStats().filter((x) => x.questions > 0).sort((a, b) => b.questions - a.questions).slice(0, 6);
+    $("#overviewSubjectBars").innerHTML = rows.length ? rows.map((x) => bar(x.subject, x.correct / x.questions, percent(x.correct / x.questions))) .join("") : '<div class="empty">Sem desempenho por disciplina ainda.</div>';
+  }
+
+  function bar(label, value, display) {
+    const safe = Math.max(0, Math.min(1, Number(value || 0)));
+    return '<div class="bar-row"><span class="bar-label" title="' + esc(label) + '">' + esc(label) + '</span><div class="bar-track"><div class="bar-fill" style="width:' + Math.round(safe * 100) + '%"></div></div><span class="bar-value">' + esc(display) + '</span></div>';
+  }
+
+  function populateSelectors() {
+    const units = state.seed.trail.items || [];
+    const unitOptions = units.map((i) => '<option value="' + esc(i.code) + '">' + esc(i.code + " — " + i.title.replace(/^\w+\s+—\s+/, "")) + '</option>').join("");
+    ["#studyUnit", "#timerUnit"].forEach((id) => $(id).innerHTML = unitOptions);
+
+    const subjects = Array.from(new Set(
+      selectedCargo().disciplines.map((d) => d.name).concat(["Língua Portuguesa", "Raciocínio Lógico-Matemático", "Revisão integrada"])
+    )).sort();
+    const subjectOptions = subjects.map((x) => '<option value="' + esc(x) + '">' + esc(x) + '</option>').join("");
+    ["#studySubject", "#timerSubject", "#noteSubject"].forEach((id) => $(id).innerHTML = subjectOptions);
+
+    syncUnitSubject("#studyUnit", "#studySubject");
+    syncUnitSubject("#timerUnit", "#timerSubject");
+  }
+
+  function syncUnitSubject(unitSelector, subjectSelector) {
+    const unit = $(unitSelector);
+    const subject = $(subjectSelector);
+    if (!unit || !subject) return;
+    const inferred = unitSubject(unit.value);
+    if (Array.from(subject.options).some((o) => o.value === inferred)) subject.value = inferred;
+  }
+
+  function renderHistory() {
+    const rows = state.sessions.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    $("#studyHistory").innerHTML = rows.length ? rows.map((s) => {
+      const acc = s.questions ? percent(s.correct / s.questions) : "sem questões";
+      return '<div class="history-item"><strong>' + esc((s.category || "Estudo") + " · " + s.code + " · " + fmtDate(s.date)) + '</strong><small>' + esc((s.subject || unitSubject(s.code)) + " · " + (s.minutes || 0) + " min · " + (s.questions || 0) + " questões · " + acc) + '</small><div class="item-actions"><small>' + esc(s.notes || s.material || "Sem observação.") + '</small><button class="text-button delete-session" data-id="' + esc(s.id) + '">Excluir</button></div></div>';
+    }).join("") : '<div class="empty">Nenhuma sessão local registrada.</div>';
+
+    $$(".delete-session").forEach((btn) => btn.addEventListener("click", () => {
+      state.sessions = state.sessions.filter((x) => x.id !== btn.dataset.id);
+      write(KEYS.sessions, state.sessions);
+      renderEverything();
+      toast("Sessão excluída.");
+    }));
+  }
+
+  function saveStudyForm(event) {
+    event.preventDefault();
+    const questions = Number($("#studyQuestions").value || 0);
+    const correct = Number($("#studyCorrect").value || 0);
+    if (correct > questions) return toast("Acertos não podem superar questões.");
+    const item = {
+      id: "local-" + Date.now(),
+      origin: "local",
+      category: $("#studyCategory").value,
+      code: $("#studyUnit").value,
+      subject: $("#studySubject").value,
+      date: $("#studyDate").value,
+      minutes: Number($("#studyMinutes").value || 0),
+      questions,
+      correct,
+      errors: Math.max(0, questions - correct),
+      material: $("#studyMaterial").value.trim(),
+      notes: $("#studyNotes").value.trim()
+    };
+    state.sessions.push(item);
+    write(KEYS.sessions, state.sessions);
+    $("#studyNotes").value = "";
+    renderEverything();
+    toast("Sessão salva. O motor foi recalculado.");
+    openView("overview");
+  }
+
+  function filteredSessions(days) {
+    if (days === "all") return allSessions();
+    const n = Number(days);
+    const today = parseDay(todayIso());
+    return allSessions().filter((s) => {
+      const d = parseDay(s.date);
+      if (!d) return false;
+      const diff = Math.floor((today - d) / 86400000);
+      return diff >= 0 && diff < n;
+    });
+  }
+
+  function renderCharts() {
+    const period = $("#chartPeriod").value;
+    const sessions = filteredSessions(period);
+    const g = globalStats(sessions);
+    const accuracy = g.questions ? g.correct / g.questions : null;
+    $("#chartMetrics").innerHTML =
+      metric("Sessões", g.sessions, period === "all" ? "todo período" : "últimos " + period + " dias", "▣") +
+      metric("Tempo", hours(g.minutes), "tempo registrado", "◷") +
+      metric("Questões", g.questions, g.errors + " erros", "✓") +
+      metric("Aproveitamento", accuracy == null ? "—" : percent(accuracy, 1), "no período", "%");
+
+    renderDailyQuestions(sessions);
+    renderAccuracyBars(sessions);
+    renderWeeklyTime(sessions);
+    renderErrorBars();
+  }
+
+  function renderDailyQuestions(sessions) {
+    const map = new Map();
+    sessions.forEach((s) => {
+      if (!s.date) return;
+      const key = String(s.date).slice(0, 10);
+      map.set(key, (map.get(key) || 0) + Number(s.questions || 0));
+    });
+    const rows = Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0])).slice(-14);
+    renderColumns("#questionsChart", rows, (x) => x, " q.");
+  }
+
+  function renderWeeklyTime(sessions) {
+    const map = new Map();
+    sessions.forEach((s) => {
+      const d = parseDay(s.date);
+      if (!d) return;
+      const weekday = (d.getDay() + 6) % 7;
+      const start = new Date(d);
+      start.setDate(start.getDate() - weekday);
+      const key = start.toISOString().slice(0, 10);
+      map.set(key, (map.get(key) || 0) + Number(s.minutes || 0));
+    });
+    const rows = Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0])).slice(-8).map((x) => [x[0], x[1] / 60]);
+    renderColumns("#timeChart", rows, (x) => x.toFixed(1), "h");
+  }
+
+  function renderColumns(selector, rows, formatter, suffix) {
+    const el = $(selector);
+    if (!rows.length) {
+      el.innerHTML = '<div class="empty" style="width:100%">Sem dados suficientes no período.</div>';
+      return;
+    }
+    const max = Math.max.apply(null, rows.map((x) => Number(x[1]) || 0).concat([1]));
+    el.innerHTML = rows.map((x) => {
+      const h = Math.max(2, Math.round((Number(x[1]) || 0) / max * 165));
+      const label = String(x[0]).slice(5).split("-").reverse().join("/");
+      return '<div class="chart-col"><em>' + esc(formatter(Number(x[1]) || 0) + (suffix || "")) + '</em><div class="chart-bar" style="height:' + h + 'px"></div><small>' + esc(label) + '</small></div>';
+    }).join("");
+  }
+
+  function renderAccuracyBars(sessions) {
+    const map = new Map();
+    sessions.forEach((s) => {
+      const subject = s.subject || unitSubject(s.code);
+      if (!map.has(subject)) map.set(subject, { q: 0, c: 0 });
+      map.get(subject).q += Number(s.questions || 0);
+      map.get(subject).c += Number(s.correct || 0);
+    });
+    const rows = Array.from(map.entries()).filter((x) => x[1].q > 0).sort((a, b) => b[1].q - a[1].q);
+    $("#accuracyChart").innerHTML = rows.length ? rows.map((x) => bar(x[0], x[1].c / x[1].q, percent(x[1].c / x[1].q))).join("") : '<div class="empty">Sem questões no período.</div>';
+  }
+
+  function renderErrorBars() {
+    const errors = state.seed.baseline.errors.top || [];
+    const counts = new Map();
+    errors.forEach((e) => counts.set(e.topic, (counts.get(e.topic) || 0) + 1));
+    const rows = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 7);
+    const max = Math.max.apply(null, rows.map((x) => x[1]).concat([1]));
+    $("#errorChart").innerHTML = rows.length ? rows.map((x) => bar(x[0], x[1] / max, x[1] + " erro" + (x[1] === 1 ? "" : "s"))).join("") : '<div class="empty">Sem caderno de erros importado.</div>';
+  }
+
+  function generateSchedule() {
+    const start = $("#scheduleStart").value || todayIso();
+    const days = Math.max(1, Math.min(7, Number($("#scheduleDays").value || 5)));
+    const blocks = Math.max(1, Math.min(6, Number($("#scheduleBlocks").value || 2)));
+    const minutes = Math.max(20, Math.min(180, Number($("#scheduleMinutes").value || 60)));
+    const ranked = rankedTrail();
+    const pending = getPendingReviews().filter((x) => x.due <= 2);
+    const plan = [];
+    let index = 0;
+    let reviewIndex = 0;
+
+    for (let d = 0; d < days; d++) {
+      const date = addDays(start, d);
+      const dayBlocks = [];
+      for (let b = 0; b < blocks; b++) {
+        if (reviewIndex < pending.length) {
+          const r = pending[reviewIndex++];
+          dayBlocks.push({ type: "Revisão " + r.label, code: r.item.code, title: r.item.title, minutes });
+        } else {
+          const entry = ranked[index % ranked.length];
+          index++;
+          dayBlocks.push({ type: "Estudo", code: entry.item.code, title: entry.item.title, minutes, score: entry.score });
+        }
+      }
+      plan.push({ date, blocks: dayBlocks });
     }
 
-    const topicCount = cargo.disciplines.reduce((sum, d) => sum + (d.items?.length || 0), 0);
-    $("#mapSummary").innerHTML = `
-      <span class="pill">${cargo.disciplines.length} disciplinas/eixos</span>
-      <span class="pill">${topicCount} tópicos/subtópicos</span>
-      <span class="pill warn">base histórica 2022 · pré-edital</span>
-      <span class="pill">cargo: ${escapeHtml(cargo.label)}</span>`;
+    $("#scheduleOutput").classList.remove("empty");
+    $("#scheduleOutput").innerHTML = plan.map((day) =>
+      '<div class="schedule-item"><div class="day-title"><strong>' + fmtDate(day.date) + '</strong><span class="soft-pill">' + day.blocks.length + ' blocos</span></div>' +
+      day.blocks.map((b) => '<div class="schedule-block"><div><strong>' + esc(b.code + " · " + b.type) + '</strong><span>' + esc(b.title.replace(/^\w+\s+—\s+/, "")) + '</span></div><span>' + b.minutes + ' min' + (b.score ? ' · score ' + b.score : '') + '</span></div>').join("") +
+      '</div>'
+    ).join("");
+  }
 
-    $("#disciplineGrid").innerHTML = disciplines.map((d) => {
-      const progress = disciplineProgress(d);
-      const progressText = progress.value === null ? "sem execução vinculada" : `${progress.done}/${progress.total} unidades da trilha`;
-      return `
-        <article class="discipline-card">
-          <div class="discipline-head" tabindex="0">
-            <div>
-              <h3>${escapeHtml(d.name)}</h3>
-              <p>${escapeHtml(d.group)} · ${d.items?.length || 0} recortes · ${escapeHtml(progressText)}</p>
-            </div>
-            <span class="pill">abrir</span>
-          </div>
-          <div class="discipline-body">
-            ${(d.items || []).map((item) => `
-              <div class="topic-row">
-                <strong>${escapeHtml(item.topic)}</strong>
-                <span>${escapeHtml(item.subtopic)}</span>
-              </div>`).join("")}
-          </div>
-        </article>`;
-    }).join("") || '<div class="empty-state">Nenhum tópico encontrado.</div>';
+  function renderProgress() {
+    const items = state.seed.trail.items;
+    const studied = items.filter((i) => lastStudyDate(i) || unitStats(i.code).sessions).length;
+    const q = globalStats().questions;
+    const d0done = items.filter((i) => reviewCompleted(i, "D0")).length;
+    const d7done = items.filter((i) => reviewCompleted(i, "D7")).length;
+    const d20done = items.filter((i) => reviewCompleted(i, "D20")).length;
 
-    $$(".discipline-head").forEach((head) => {
-      const toggle = () => head.closest(".discipline-card").classList.toggle("open");
+    $("#progressMetrics").innerHTML =
+      metric("Trilha", studied + "/" + items.length, percent(studied / items.length) + " com evidência", "◎") +
+      metric("D0 concluído", d0done, "revisões imediatas", "0") +
+      metric("D7 concluído", d7done, "revisões de 7 dias", "7") +
+      metric("Questões", q, "acumulado registrado", "✓");
+
+    const groups = [
+      ["Português", items.filter((i) => /^P\d+/.test(i.code))],
+      ["RLM", items.filter((i) => /^RL\d+/.test(i.code))],
+      ["Revisões integradas", items.filter((i) => /^REV\d+/.test(i.code))]
+    ];
+    $("#trackProgress").innerHTML = groups.map((g) => {
+      const done = g[1].filter((i) => lastStudyDate(i) || unitStats(i.code).sessions).length;
+      return progressGroup(g[0], done, g[1].length);
+    }).join("");
+
+    $("#revisionProgress").innerHTML =
+      progressGroup("D0", d0done, items.filter((i) => lastStudyDate(i)).length || items.length) +
+      progressGroup("D7", d7done, items.filter((i) => lastStudyDate(i)).length || items.length) +
+      progressGroup("D20", d20done, items.filter((i) => lastStudyDate(i)).length || items.length);
+
+    renderProgressTable();
+  }
+
+  function progressGroup(label, done, total) {
+    const ratio = total ? Math.min(1, done / total) : 0;
+    return '<div class="progress-group"><div class="progress-head"><strong>' + esc(label) + '</strong><span>' + done + '/' + total + ' · ' + Math.round(ratio * 100) + '%</span></div><div class="progress-track"><span style="width:' + Math.round(ratio * 100) + '%"></span></div></div>';
+  }
+
+  function renderProgressTable() {
+    const filter = $("#progressFilter").value;
+    let rows = state.seed.trail.items.map(scoreItem);
+    if (filter === "critical") rows = rows.filter((x) => x.score >= 75);
+    if (filter === "studied") rows = rows.filter((x) => x.stats.sessions || lastStudyDate(x.item));
+    if (filter === "pending") rows = rows.filter((x) => !x.stats.sessions && !lastStudyDate(x.item));
+
+    $("#progressTable").innerHTML = rows.map((x) => {
+      const acc = x.accuracy == null ? "—" : percent(x.accuracy);
+      const status = lastStudyDate(x.item) ? "Com evidência" : "Não estudado";
+      return '<div class="data-row"><strong>' + esc(x.item.code) + '</strong><div><strong>' + esc(x.item.title.replace(/^\w+\s+—\s+/, "")) + '</strong><small style="display:block;color:var(--muted);margin-top:2px">' + esc(x.item.priority) + '</small></div><span class="hide-mobile">' + esc(status) + '</span><span class="hide-mobile">' + esc(acc) + '</span><strong>' + x.score + '</strong></div>';
+    }).join("");
+  }
+
+  function disciplineWeakness(discipline) {
+    const stats = subjectStats().find((x) => String(discipline.name).toLowerCase().includes(String(x.subject).toLowerCase()) || String(x.subject).toLowerCase().includes(String(discipline.name).toLowerCase()));
+    if (stats && stats.questions) return 1 - stats.correct / stats.questions;
+    if (String(discipline.canonicalSubject || "").includes("Língua Portuguesa")) {
+      const p = subjectStats().find((x) => x.subject === "Língua Portuguesa");
+      if (p && p.questions) return 1 - p.correct / p.questions;
+    }
+    return Number(state.seed.scoringPolicy.unknownWeakness || 0.55);
+  }
+
+  function allocate(total, rows) {
+    const sum = rows.reduce((a, x) => a + x.weight, 0) || 1;
+    const out = rows.map((x) => {
+      const raw = total * x.weight / sum;
+      return Object.assign({}, x, { raw, count: Math.floor(raw), frac: raw - Math.floor(raw) });
+    });
+    let used = out.reduce((a, x) => a + x.count, 0);
+    out.sort((a, b) => b.frac - a.frac);
+    let i = 0;
+    while (used < total && out.length) {
+      out[i % out.length].count += 1;
+      used++;
+      i++;
+    }
+    return out.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  }
+
+  function generateSimulator() {
+    const total = Math.max(10, Math.min(120, Number($("#simQuestions").value || 40)));
+    const mode = $("#simMode").value;
+    const cargo = selectedCargo();
+    const weighted = cargo.disciplines.map((d) => {
+      const coverage = Math.max(1, (d.items || []).length);
+      const weakness = disciplineWeakness(d);
+      return { name: d.name, weakness, weight: mode === "attack" ? coverage * (1 + weakness * 0.95) : coverage };
+    });
+    const rows = allocate(total, weighted).filter((x) => x.count > 0);
+    $("#simTitle").textContent = total + " questões · " + (mode === "attack" ? "Ataque adaptativo" : "Cobertura");
+    $("#simOutput").classList.remove("empty");
+    $("#simOutput").innerHTML = rows.map((x) => '<div class="sim-row"><strong>' + esc(x.name) + '</strong><span>' + x.count + ' q.</span></div>').join("");
+    state.simText = "TJDFT — " + cargo.label + "\n" +
+      "Blueprint: " + total + " questões · " + (mode === "attack" ? "Ataque adaptativo" : "Cobertura") + "\n\n" +
+      rows.map((x) => x.name + ": " + x.count + " questões").join("\n") +
+      "\n\nDistribuição experimental por cobertura e desempenho; não representa incidência histórica oficial.";
+    $("#copySim").disabled = false;
+  }
+
+  function renderNotes() {
+    const query = ($("#noteSearch").value || "").trim().toLowerCase();
+    const rows = state.notes.filter((n) => !query || [n.subject, n.title, n.body].join(" ").toLowerCase().includes(query)).slice().sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    $("#notesList").innerHTML = rows.length ? rows.map((n) =>
+      '<div class="note-item"><strong>' + esc(n.title || "Sem título") + '</strong><small>' + esc(n.subject) + ' · ' + fmtDate(n.createdAt) + '</small><p class="subtle" style="white-space:pre-wrap;margin-bottom:4px">' + esc(n.body) + '</p><div class="item-actions"><span></span><button class="text-button delete-note" data-id="' + esc(n.id) + '">Excluir</button></div></div>'
+    ).join("") : '<div class="empty">Nenhuma anotação encontrada.</div>';
+
+    $$(".delete-note").forEach((btn) => btn.addEventListener("click", () => {
+      state.notes = state.notes.filter((n) => n.id !== btn.dataset.id);
+      write(KEYS.notes, state.notes);
+      renderNotes();
+      toast("Anotação excluída.");
+    }));
+  }
+
+  function saveNote() {
+    const title = $("#noteTitle").value.trim();
+    const body = $("#noteBody").value.trim();
+    if (!title && !body) return toast("Escreva um título ou conteúdo.");
+    state.notes.push({
+      id: "note-" + Date.now(),
+      subject: $("#noteSubject").value,
+      title,
+      body,
+      createdAt: todayIso()
+    });
+    write(KEYS.notes, state.notes);
+    $("#noteTitle").value = "";
+    $("#noteBody").value = "";
+    renderNotes();
+    toast("Anotação salva.");
+  }
+
+  function renderSubjects() {
+    const cargo = selectedCargo();
+    const query = ($("#subjectSearch").value || "").trim().toLowerCase();
+    const all = cargo.disciplines || [];
+    const count = all.reduce((sum, d) => sum + (d.items || []).length, 0);
+    $("#subjectSummary").innerHTML =
+      '<span class="soft-pill">' + all.length + ' disciplinas/eixos</span>' +
+      '<span class="soft-pill">' + count + ' tópicos/subtópicos</span>' +
+      '<span class="soft-pill">' + esc(cargo.label) + '</span>';
+
+    const filtered = all.filter((d) => {
+      if (!query) return true;
+      return [d.name, d.canonicalSubject].concat((d.items || []).flatMap((x) => [x.topic, x.subtopic])).join(" ").toLowerCase().includes(query);
+    });
+
+    $("#subjectGrid").innerHTML = filtered.map((d) =>
+      '<article class="subject-card"><div class="subject-head" tabindex="0"><div><h3>' + esc(d.name) + '</h3><p>' + esc(d.group || "") + ' · ' + (d.items || []).length + ' recortes</p></div><span class="soft-pill">abrir</span></div><div class="subject-body">' +
+      (d.items || []).map((x) => '<div class="topic"><strong>' + esc(x.topic) + '</strong><span>' + esc(x.subtopic) + '</span></div>').join("") +
+      '</div></article>'
+    ).join("") || '<div class="empty">Nenhum resultado.</div>';
+
+    $$(".subject-head").forEach((head) => {
+      const toggle = () => head.closest(".subject-card").classList.toggle("open");
       head.addEventListener("click", toggle);
       head.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") toggle();
@@ -298,229 +764,196 @@
     });
   }
 
-  function trailMatches(entry, filter) {
-    if (filter === "priority") return entry.priority >= .8;
-    if (filter === "review") return entry.item.next_review && entry.review >= 1;
-    if (filter === "studied") return entry.stats.sessions > 0 || Boolean(entry.item.last_execution);
-    if (filter === "pending") return entry.item.state === "Não estudado" && entry.stats.sessions === 0;
-    return true;
+  function formatTimer(seconds) {
+    const s = Math.max(0, Math.floor(seconds));
+    const hh = String(Math.floor(s / 3600)).padStart(2, "0");
+    const mm = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+    const ss = String(s % 60).padStart(2, "0");
+    return hh + ":" + mm + ":" + ss;
   }
 
-  function renderTrail() {
-    const filter = $("#trailFilter").value;
-    const rows = state.seed.trail.items.map(itemScore).filter((entry) => trailMatches(entry, filter));
-    $("#trailTable").innerHTML = rows.map((entry) => {
-      const acc = entry.accuracy === null ? "—" : pct(entry.accuracy);
-      const overdue = entry.item.next_review && entry.review >= 1;
-      return `
-        <div class="trail-row">
-          <div class="trail-code">${escapeHtml(entry.item.code)}</div>
-          <div class="trail-title">
-            ${escapeHtml(entry.item.title.replace(/^\w+\s+—\s+/, ""))}
-            <small>${escapeHtml(entry.item.block)} · ${escapeHtml(entry.item.priority)}${overdue ? " · revisão vencida" : ""}</small>
-          </div>
-          <div class="track-col"><span class="pill">${escapeHtml(entry.item.track)}</span></div>
-          <div class="state-col"><span class="pill ${overdue ? "bad" : ""}">${escapeHtml(entry.item.state)}</span></div>
-          <div class="trail-score">${entry.score}<small style="display:block;color:var(--muted)">${acc}</small></div>
-        </div>`;
-    }).join("") || '<div class="empty-state">Nenhuma unidade nesse filtro.</div>';
-  }
-
-  function allocate(total, weighted) {
-    const sum = weighted.reduce((s, x) => s + x.weight, 0) || 1;
-    const raw = weighted.map((x) => ({ ...x, raw: total * x.weight / sum }));
-    const out = raw.map((x) => ({ ...x, count: Math.floor(x.raw), frac: x.raw - Math.floor(x.raw) }));
-    let used = out.reduce((s, x) => s + x.count, 0);
-    out.sort((a, b) => b.frac - a.frac);
-    for (let i = 0; used < total; i = (i + 1) % out.length) {
-      out[i].count++;
-      used++;
+  function configureTimerMode(mode) {
+    state.timer.mode = mode;
+    state.timer.running = false;
+    if (state.timer.interval) clearInterval(state.timer.interval);
+    state.timer.interval = null;
+    if (mode === "stopwatch") {
+      state.timer.seconds = 0;
+      state.timer.target = 0;
+    } else if (mode === "pomodoro") {
+      state.timer.target = 25 * 60;
+      state.timer.seconds = state.timer.target;
+    } else {
+      state.timer.target = Math.max(1, Number($("#countdownMinutes").value || 60)) * 60;
+      state.timer.seconds = state.timer.target;
     }
-    return out.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+    $$(".timer-mode").forEach((btn) => btn.classList.toggle("active", btn.dataset.mode === mode));
+    renderTimer();
   }
 
-  function disciplineWeakness(discipline) {
-    if (String(discipline.canonicalSubject).includes("Língua Portuguesa")) {
-      const g = globalStats();
-      if (g.questions) return 1 - g.correct / g.questions;
+  function renderTimer() {
+    $("#timerDisplay").textContent = formatTimer(state.timer.seconds);
+    let pct = 0;
+    if (state.timer.mode !== "stopwatch" && state.timer.target) {
+      pct = Math.round((1 - state.timer.seconds / state.timer.target) * 100);
     }
-    return state.seed.scoringPolicy.unknownWeakness;
+    $("#timerProgress").style.width = Math.max(0, Math.min(100, pct)) + "%";
   }
 
-  function generateSimulator() {
-    const cargo = state.seed.cargos[state.cargo];
-    const total = Math.max(10, Math.min(120, Number($("#simQuestions").value || 40)));
-    const mode = $("#simMode").value;
+  function startTimer() {
+    if (state.timer.running) return;
+    if (state.timer.mode === "countdown" && state.timer.seconds <= 0) configureTimerMode("countdown");
+    state.timer.running = true;
+    state.timer.interval = setInterval(() => {
+      if (state.timer.mode === "stopwatch") {
+        state.timer.seconds += 1;
+      } else {
+        state.timer.seconds -= 1;
+        if (state.timer.seconds <= 0) {
+          state.timer.seconds = 0;
+          pauseTimer();
+          toast("Bloco concluído.");
+        }
+      }
+      renderTimer();
+    }, 1000);
+  }
 
-    const weighted = cargo.disciplines.map((d) => {
-      const coverage = Math.max(1, d.items?.length || 1);
-      const weakness = disciplineWeakness(d);
-      const weight = mode === "attack" ? coverage * (1 + weakness * .9) : coverage;
-      return { name: d.name, weight, weakness };
+  function pauseTimer() {
+    state.timer.running = false;
+    if (state.timer.interval) clearInterval(state.timer.interval);
+    state.timer.interval = null;
+  }
+
+  function resetTimer() {
+    pauseTimer();
+    configureTimerMode(state.timer.mode);
+  }
+
+  function timerElapsedMinutes() {
+    if (state.timer.mode === "stopwatch") return Math.round(state.timer.seconds / 60);
+    return Math.round((state.timer.target - state.timer.seconds) / 60);
+  }
+
+  function saveTimerSession() {
+    const minutes = timerElapsedMinutes();
+    if (minutes <= 0) return toast("Ainda não há tempo suficiente para salvar.");
+    const code = $("#timerUnit").value;
+    state.sessions.push({
+      id: "timer-" + Date.now(),
+      origin: "local",
+      category: "Estudo",
+      code,
+      subject: $("#timerSubject").value || unitSubject(code),
+      date: todayIso(),
+      minutes,
+      questions: 0,
+      correct: 0,
+      errors: 0,
+      material: "Timer",
+      notes: "Sessão registrada pelo timer."
     });
-
-    const allocated = allocate(total, weighted).filter((x) => x.count > 0);
-    $("#simTitle").textContent = `${total} questões · ${mode === "attack" ? "Ataque adaptativo" : "Cobertura"}`;
-    $("#simOutput").classList.remove("empty-state");
-    $("#simOutput").innerHTML = allocated.map((row) => `
-      <div class="sim-row">
-        <strong>${escapeHtml(row.name)}</strong>
-        <span>${row.count} q.</span>
-      </div>`).join("");
-
-    state.simulatorText = [
-      `TJDFT — ${cargo.label}`,
-      `Blueprint: ${total} questões · ${mode === "attack" ? "Ataque adaptativo" : "Cobertura do edital"}`,
-      "",
-      ...allocated.map((row) => `${row.name}: ${row.count} questões`),
-      "",
-      "Observação: distribuição experimental por granularidade do edital; não representa incidência histórica oficial."
-    ].join("\n");
-    $("#copySimBtn").disabled = false;
+    write(KEYS.sessions, state.sessions);
+    resetTimer();
+    renderEverything();
+    toast("Tempo salvo como sessão de estudo.");
   }
 
-  function populateSessionCodes() {
-    $("#sessionCode").innerHTML = state.seed.trail.items.map((item) =>
-      `<option value="${escapeHtml(item.code)}">${escapeHtml(item.code)} — ${escapeHtml(item.title.replace(/^\w+\s+—\s+/, ""))}</option>`
-    ).join("");
+  function renderEverything() {
+    renderSource();
+    populateSelectors();
+    renderOverview();
+    renderHistory();
+    renderProgress();
+    renderNotes();
+    renderSubjects();
+    renderCharts();
   }
 
-  function renderLocalSessions() {
-    const list = [...state.localSessions].sort((a, b) => String(b.date).localeCompare(String(a.date)));
-    $("#localSessionList").innerHTML = list.length ? list.map((s) => {
-      const accuracy = s.questions ? s.correct / s.questions : null;
-      return `
-        <div class="session-item">
-          <div>
-            <strong>${escapeHtml(s.code)} · ${fmtDate(s.date)}</strong>
-            <small>${escapeHtml(s.notes || "Sem observação.")}</small>
-            <div class="session-stats">${s.minutes || 0} min · ${s.questions || 0} questões · ${accuracy === null ? "—" : pct(accuracy)} de acerto</div>
-          </div>
-          <button class="ghost-btn small delete-session" data-id="${escapeHtml(s.id)}">Excluir</button>
-        </div>`;
-    }).join("") : '<div class="empty-state">Nenhuma sessão local ainda. As 61 questões importadas continuam preservadas na semente.</div>';
-
-    $$(".delete-session").forEach((btn) => btn.addEventListener("click", () => {
-      state.localSessions = state.localSessions.filter((s) => s.id !== btn.dataset.id);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.localSessions));
-      renderAll();
-      toast("Sessão local excluída.");
-    }));
-  }
-
-  function renderWarning() {
-    const sourceDate = state.seed.source.snapshotAsOf || state.seed.source.snapshotSyncedAt;
-    $("#dataWarning").innerHTML = `Base inicial importada do <strong>tjdft-dashboard</strong> (${fmtDate(sourceDate)}). Novas sessões deste laboratório ficam somente neste navegador. O score é experimental e <strong>não</strong> é incidência histórica oficial.`;
-    $("#syncBadge").textContent = `Seed: ${fmtDate(sourceDate)}`;
-  }
-
-  function renderAll() {
-    renderWarning();
-    renderMetrics();
-    renderRecommendation();
-    renderQueue();
-    renderErrors();
-    renderDomainMatrix();
-    renderMap();
-    renderTrail();
-    renderLocalSessions();
-  }
-
-  function bindEvents() {
-    $$(".nav-item").forEach((btn) => btn.addEventListener("click", () => switchView(btn.dataset.view)));
-    $$("[data-go]").forEach((btn) => btn.addEventListener("click", () => switchView(btn.dataset.go)));
+  function bind() {
+    $$(".nav-item").forEach((btn) => btn.addEventListener("click", () => openView(btn.dataset.view)));
+    $$("[data-open]").forEach((btn) => btn.addEventListener("click", () => openView(btn.dataset.open)));
 
     $("#cargoSelect").value = state.cargo;
     $("#cargoSelect").addEventListener("change", (e) => {
       state.cargo = e.target.value;
-      localStorage.setItem(CARGO_KEY, state.cargo);
-      renderMap();
-      if (state.simulatorText) generateSimulator();
+      localStorage.setItem(KEYS.cargo, state.cargo);
+      populateSelectors();
+      renderSubjects();
+      renderOverview();
+      renderProgress();
+      toast("Cargo alterado para " + (state.cargo === "tecnico" ? "Técnico" : "Analista") + ".");
     });
 
-    $("#mapSearch").addEventListener("input", renderMap);
-    $("#trailFilter").addEventListener("change", renderTrail);
-    $("#generateSimBtn").addEventListener("click", generateSimulator);
-    $("#copySimBtn").addEventListener("click", async () => {
-      if (!state.simulatorText) return;
+    $("#heroRegisterBtn").addEventListener("click", () => openView("register"));
+    $("#focusStudyBtn").addEventListener("click", (e) => {
+      $("#studyUnit").value = e.currentTarget.dataset.code || state.seed.trail.items[0].code;
+      syncUnitSubject("#studyUnit", "#studySubject");
+      openView("register");
+    });
+
+    $("#studyUnit").addEventListener("change", () => syncUnitSubject("#studyUnit", "#studySubject"));
+    $("#timerUnit").addEventListener("change", () => syncUnitSubject("#timerUnit", "#timerSubject"));
+    $("#studyForm").addEventListener("submit", saveStudyForm);
+
+    $$(".timer-mode").forEach((btn) => btn.addEventListener("click", () => configureTimerMode(btn.dataset.mode)));
+    $("#timerStart").addEventListener("click", startTimer);
+    $("#timerPause").addEventListener("click", pauseTimer);
+    $("#timerReset").addEventListener("click", resetTimer);
+    $("#timerSave").addEventListener("click", saveTimerSession);
+    $("#countdownMinutes").addEventListener("change", () => {
+      if (state.timer.mode === "countdown" && !state.timer.running) configureTimerMode("countdown");
+    });
+
+    $("#chartPeriod").addEventListener("change", renderCharts);
+    $("#generateSchedule").addEventListener("click", generateSchedule);
+    $("#progressFilter").addEventListener("change", renderProgressTable);
+    $("#generateSim").addEventListener("click", generateSimulator);
+    $("#copySim").addEventListener("click", async () => {
       try {
-        await navigator.clipboard.writeText(state.simulatorText);
+        await navigator.clipboard.writeText(state.simText);
         toast("Blueprint copiado.");
-      } catch {
-        toast("Não foi possível acessar a área de transferência.");
+      } catch (_) {
+        toast("Não foi possível copiar automaticamente.");
       }
     });
 
-    $("#studyRecommendationBtn").addEventListener("click", (e) => {
-      $("#sessionCode").value = e.currentTarget.dataset.code;
-      switchView("registro");
-    });
-
-    $("#sessionForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const questions = Number($("#sessionQuestions").value || 0);
-      const correct = Number($("#sessionCorrect").value || 0);
-      if (correct > questions) {
-        toast("Acertos não podem superar o número de questões.");
-        return;
-      }
-      const session = {
-        id: `lab-${Date.now()}`,
-        origin: "planner-adaptativo-tjdft",
-        code: $("#sessionCode").value,
-        date: $("#sessionDate").value,
-        minutes: Number($("#sessionMinutes").value || 0),
-        questions,
-        correct,
-        errors: Math.max(0, questions - correct),
-        notes: $("#sessionNotes").value.trim()
-      };
-      state.localSessions.push(session);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.localSessions));
-      $("#sessionNotes").value = "";
-      renderAll();
-      toast("Sessão salva. Score recalculado.");
-      switchView("hoje");
-    });
+    $("#saveNote").addEventListener("click", saveNote);
+    $("#noteSearch").addEventListener("input", renderNotes);
+    $("#subjectSearch").addEventListener("input", renderSubjects);
 
     $("#exportBtn").addEventListener("click", () => {
       const payload = {
-        schemaVersion: 1,
+        schemaVersion: 2,
         exportedAt: new Date().toISOString(),
         cargo: state.cargo,
-        sessions: state.localSessions
+        sessions: state.sessions,
+        notes: state.notes
       };
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `planner-tjdft-${todayIso()}.json`;
+      a.download = "planner-tjdft-" + todayIso() + ".json";
       a.click();
       URL.revokeObjectURL(url);
-    });
-
-    $("#resetBtn").addEventListener("click", () => {
-      if (!confirm("Apagar somente as sessões locais deste laboratório? A semente importada do TJDFT será preservada.")) return;
-      state.localSessions = [];
-      localStorage.removeItem(STORAGE_KEY);
-      renderAll();
-      toast("Dados locais limpos.");
     });
   }
 
   async function init() {
     try {
       const response = await fetch("./data/seed.json", { cache: "no-store" });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) throw new Error("HTTP " + response.status);
       state.seed = await response.json();
-      $("#sessionDate").value = todayIso();
-      populateSessionCodes();
-      bindEvents();
-      renderAll();
+      $("#studyDate").value = todayIso();
+      $("#scheduleStart").value = todayIso();
+      bind();
+      configureTimerMode("stopwatch");
+      renderEverything();
     } catch (error) {
       console.error(error);
-      $("#pageTitle").textContent = "Falha ao carregar a base";
-      $("#view-hoje").innerHTML = `<div class="notice">Não foi possível carregar <code>data/seed.json</code>. Verifique a publicação do GitHub Pages.</div>`;
+      $("#viewTitle").textContent = "Falha ao carregar";
+      $("#view-overview").innerHTML = '<div class="notice">Não foi possível carregar a base do TJDFT. Verifique data/seed.json e o deploy.</div>';
     }
   }
 
