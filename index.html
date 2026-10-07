@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="Laboratório adaptativo de estudos para TJDFT — Técnico e Analista Administrativo." />
+  <title>Planner Adaptativo TJDFT — Lab</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">TJ</div>
+        <div>
+          <strong>Planner Adaptativo</strong>
+          <span>TJDFT · LAB</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <button class="nav-item active" data-view="hoje">◎ <span>Hoje</span></button>
+        <button class="nav-item" data-view="mapa">▦ <span>Mapa do edital</span></button>
+        <button class="nav-item" data-view="trilha">↗ <span>Trilha</span></button>
+        <button class="nav-item" data-view="simulador">◇ <span>Simulador</span></button>
+        <button class="nav-item" data-view="registro">＋ <span>Registrar sessão</span></button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="lab-note">
+          <span class="dot"></span>
+          <div>
+            <strong>Ambiente experimental</strong>
+            <small>Não altera o TJDFT oficial.</small>
+          </div>
+        </div>
+        <button id="exportBtn" class="ghost-btn">Exportar meus dados</button>
+        <button id="resetBtn" class="ghost-btn danger">Limpar dados locais</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">TJDFT · Técnico + Analista Administrativo</p>
+          <h1 id="pageTitle">O que estudar agora?</h1>
+        </div>
+        <div class="top-actions">
+          <label class="select-wrap">
+            <span>Cargo</span>
+            <select id="cargoSelect">
+              <option value="tecnico">Técnico</option>
+              <option value="analista">Analista</option>
+            </select>
+          </label>
+          <div id="syncBadge" class="sync-badge">Carregando base…</div>
+        </div>
+      </header>
+
+      <section id="view-hoje" class="view active">
+        <div id="dataWarning" class="notice"></div>
+
+        <div id="metricGrid" class="metric-grid"></div>
+
+        <div class="two-col hero-grid">
+          <article class="panel recommendation-panel">
+            <div class="panel-head">
+              <div>
+                <span class="kicker">RECOMENDAÇÃO ADAPTATIVA</span>
+                <h2 id="recommendTitle">Calculando…</h2>
+              </div>
+              <div id="recommendScore" class="score-ring">—</div>
+            </div>
+            <p id="recommendReason" class="muted"></p>
+            <div id="recommendFactors" class="factor-grid"></div>
+            <div class="actions-row">
+              <button id="studyRecommendationBtn" class="primary-btn">Registrar estudo desta unidade</button>
+              <button class="secondary-btn" data-go="trilha">Ver fila completa</button>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head compact">
+              <div>
+                <span class="kicker">DOMÍNIO</span>
+                <h2>Matriz de decisão</h2>
+              </div>
+            </div>
+            <div id="domainMatrix" class="domain-matrix"></div>
+            <p class="microcopy">Alta prioridade + baixo desempenho = atacar primeiro. Sem desempenho medido, o sistema mantém incerteza explícita.</p>
+          </article>
+        </div>
+
+        <div class="two-col">
+          <article class="panel">
+            <div class="panel-head compact">
+              <div>
+                <span class="kicker">FILA</span>
+                <h2>Próximas prioridades</h2>
+              </div>
+            </div>
+            <div id="priorityQueue" class="priority-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head compact">
+              <div>
+                <span class="kicker">ERROS ATIVOS</span>
+                <h2>Caderno que pede retorno</h2>
+              </div>
+            </div>
+            <div id="errorList" class="error-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="view-mapa" class="view">
+        <div class="section-toolbar">
+          <div>
+            <span class="kicker">EDITAL VERTICALIZADO</span>
+            <h2 id="mapTitle">Mapa do Técnico</h2>
+          </div>
+          <input id="mapSearch" class="search-input" type="search" placeholder="Buscar disciplina, tópico ou subtópico…" />
+        </div>
+        <div class="notice subtle">
+          <strong>Importante:</strong> este MVP não chama “peso de cobertura” de incidência histórica. A incidência da banca só entra quando existir uma base validada.
+        </div>
+        <div id="mapSummary" class="map-summary"></div>
+        <div id="disciplineGrid" class="discipline-grid"></div>
+      </section>
+
+      <section id="view-trilha" class="view">
+        <div class="section-toolbar">
+          <div>
+            <span class="kicker">ESTEIRA REAL</span>
+            <h2>P01–P18 · RL01–RL13 · REV01–REV06</h2>
+          </div>
+          <select id="trailFilter" class="search-input compact-input">
+            <option value="all">Todas</option>
+            <option value="priority">Prioridade alta</option>
+            <option value="review">Revisão vencida</option>
+            <option value="studied">Com evidência</option>
+            <option value="pending">Não estudadas</option>
+          </select>
+        </div>
+        <div id="trailTable" class="trail-table"></div>
+      </section>
+
+      <section id="view-simulador" class="view">
+        <div class="two-col simulator-layout">
+          <article class="panel">
+            <span class="kicker">BLUEPRINT</span>
+            <h2>Gerador de simulado</h2>
+            <p class="muted">O modo Cobertura distribui itens pela granularidade do edital. O modo Ataque reforça áreas com evidência de fraqueza.</p>
+
+            <div class="form-grid">
+              <label>
+                <span>Número de questões</span>
+                <input id="simQuestions" type="number" min="10" max="120" step="5" value="40" />
+              </label>
+              <label>
+                <span>Modo</span>
+                <select id="simMode">
+                  <option value="coverage">Cobertura do edital</option>
+                  <option value="attack">Ataque adaptativo</option>
+                </select>
+              </label>
+            </div>
+            <button id="generateSimBtn" class="primary-btn full">Gerar blueprint</button>
+            <p class="microcopy">Blueprint ≠ banco de questões. Ele diz quantas questões buscar por disciplina/tópico.</p>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head compact">
+              <div>
+                <span class="kicker">SAÍDA</span>
+                <h2 id="simTitle">Ainda não gerado</h2>
+              </div>
+              <button id="copySimBtn" class="ghost-btn small" disabled>Copiar</button>
+            </div>
+            <div id="simOutput" class="sim-output empty-state">Escolha as opções e gere o primeiro blueprint.</div>
+          </article>
+        </div>
+      </section>
+
+      <section id="view-registro" class="view">
+        <div class="two-col register-layout">
+          <article class="panel">
+            <span class="kicker">EVIDÊNCIA</span>
+            <h2>Registrar sessão</h2>
+            <form id="sessionForm">
+              <div class="form-grid">
+                <label class="span-2">
+                  <span>Unidade da trilha</span>
+                  <select id="sessionCode" required></select>
+                </label>
+                <label>
+                  <span>Data</span>
+                  <input id="sessionDate" type="date" required />
+                </label>
+                <label>
+                  <span>Tempo (min)</span>
+                  <input id="sessionMinutes" type="number" min="0" max="600" value="60" />
+                </label>
+                <label>
+                  <span>Questões</span>
+                  <input id="sessionQuestions" type="number" min="0" max="500" value="20" />
+                </label>
+                <label>
+                  <span>Acertos</span>
+                  <input id="sessionCorrect" type="number" min="0" max="500" value="15" />
+                </label>
+                <label class="span-2">
+                  <span>Observação</span>
+                  <textarea id="sessionNotes" rows="4" placeholder="Ex.: dificuldade em orações subordinadas; revisar erro X."></textarea>
+                </label>
+              </div>
+              <button class="primary-btn full" type="submit">Salvar sessão e recalcular</button>
+            </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head compact">
+              <div>
+                <span class="kicker">HISTÓRICO LOCAL</span>
+                <h2>Sessões deste laboratório</h2>
+              </div>
+            </div>
+            <div id="localSessionList" class="session-list"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="toastTemplate">
+    <div class="toast"></div>
+  </template>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
