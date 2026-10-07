@@ -3,242 +3,340 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0f172a" />
-  <meta name="description" content="Laboratório adaptativo de estudos para TJDFT — Técnico e Analista Administrativo." />
-  <title>Planner Adaptativo TJDFT — Lab</title>
+  <meta name="theme-color" content="#f6f7fb" />
+  <meta name="description" content="Planner adaptativo de estudos para o TJDFT — Técnico e Analista Administrativo." />
+  <title>Planner TJDFT — Laboratório Adaptativo</title>
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="app-shell">
+  <div class="app">
     <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">TJ</div>
-        <div>
-          <strong>Planner Adaptativo</strong>
-          <span>TJDFT · LAB</span>
+      <div class="logo-wrap">
+        <div class="logo-mark">P</div>
+        <div class="logo-copy">
+          <strong>Planner TJDFT</strong>
+          <span>Laboratório adaptativo</span>
         </div>
       </div>
 
-      <nav class="nav" aria-label="Navegação principal">
-        <button class="nav-item active" data-view="hoje">◎ <span>Hoje</span></button>
-        <button class="nav-item" data-view="mapa">▦ <span>Mapa do edital</span></button>
-        <button class="nav-item" data-view="trilha">↗ <span>Trilha</span></button>
-        <button class="nav-item" data-view="simulador">◇ <span>Simulador</span></button>
-        <button class="nav-item" data-view="registro">＋ <span>Registrar sessão</span></button>
+      <div class="contest-card">
+        <span class="contest-label">Concurso ativo</span>
+        <strong>TJDFT</strong>
+        <small>Técnico + Analista Administrativo</small>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="overview"><span>⌂</span>Visão Geral</button>
+        <button class="nav-item" data-view="register"><span>＋</span>Registro de Estudo</button>
+        <button class="nav-item" data-view="timer"><span>◷</span>Timer</button>
+        <button class="nav-item" data-view="charts"><span>▥</span>Gráficos</button>
+        <button class="nav-item" data-view="schedule"><span>▣</span>Cronograma</button>
+        <button class="nav-item" data-view="progress"><span>◎</span>Progresso</button>
+        <button class="nav-item" data-view="simulator"><span>◇</span>Simulador</button>
+        <button class="nav-item" data-view="notes"><span>✎</span>Anotações</button>
+        <button class="nav-item" data-view="subjects"><span>☷</span>Disciplinas</button>
       </nav>
 
-      <div class="sidebar-footer">
-        <div class="lab-note">
-          <span class="dot"></span>
-          <div>
-            <strong>Ambiente experimental</strong>
-            <small>Não altera o TJDFT oficial.</small>
-          </div>
-        </div>
-        <button id="exportBtn" class="ghost-btn">Exportar meus dados</button>
-        <button id="resetBtn" class="ghost-btn danger">Limpar dados locais</button>
+      <div class="sidebar-bottom">
+        <div class="lab-chip"><span></span> Ambiente experimental</div>
+        <button class="text-button" id="exportBtn">Exportar dados locais</button>
       </div>
     </aside>
 
-    <main class="main">
+    <main class="content">
       <header class="topbar">
         <div>
-          <p class="eyebrow">TJDFT · Técnico + Analista Administrativo</p>
-          <h1 id="pageTitle">O que estudar agora?</h1>
+          <p class="eyebrow">PLANEJAMENTO ESTRATÉGICO · TJDFT</p>
+          <h1 id="viewTitle">Visão Geral</h1>
         </div>
-        <div class="top-actions">
-          <label class="select-wrap">
+        <div class="topbar-actions">
+          <label class="field-inline">
             <span>Cargo</span>
             <select id="cargoSelect">
               <option value="tecnico">Técnico</option>
               <option value="analista">Analista</option>
             </select>
           </label>
-          <div id="syncBadge" class="sync-badge">Carregando base…</div>
+          <div class="source-status" id="sourceStatus">Carregando base…</div>
         </div>
       </header>
 
-      <section id="view-hoje" class="view active">
-        <div id="dataWarning" class="notice"></div>
-
-        <div id="metricGrid" class="metric-grid"></div>
-
-        <div class="two-col hero-grid">
-          <article class="panel recommendation-panel">
-            <div class="panel-head">
-              <div>
-                <span class="kicker">RECOMENDAÇÃO ADAPTATIVA</span>
-                <h2 id="recommendTitle">Calculando…</h2>
-              </div>
-              <div id="recommendScore" class="score-ring">—</div>
-            </div>
-            <p id="recommendReason" class="muted"></p>
-            <div id="recommendFactors" class="factor-grid"></div>
-            <div class="actions-row">
-              <button id="studyRecommendationBtn" class="primary-btn">Registrar estudo desta unidade</button>
-              <button class="secondary-btn" data-go="trilha">Ver fila completa</button>
-            </div>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head compact">
-              <div>
-                <span class="kicker">DOMÍNIO</span>
-                <h2>Matriz de decisão</h2>
-              </div>
-            </div>
-            <div id="domainMatrix" class="domain-matrix"></div>
-            <p class="microcopy">Alta prioridade + baixo desempenho = atacar primeiro. Sem desempenho medido, o sistema mantém incerteza explícita.</p>
-          </article>
-        </div>
-
-        <div class="two-col">
-          <article class="panel">
-            <div class="panel-head compact">
-              <div>
-                <span class="kicker">FILA</span>
-                <h2>Próximas prioridades</h2>
-              </div>
-            </div>
-            <div id="priorityQueue" class="priority-list"></div>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head compact">
-              <div>
-                <span class="kicker">ERROS ATIVOS</span>
-                <h2>Caderno que pede retorno</h2>
-              </div>
-            </div>
-            <div id="errorList" class="error-list"></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="view-mapa" class="view">
-        <div class="section-toolbar">
+      <section class="view active" id="view-overview">
+        <div class="hero">
           <div>
-            <span class="kicker">EDITAL VERTICALIZADO</span>
-            <h2 id="mapTitle">Mapa do Técnico</h2>
+            <span class="badge">MOTOR ADAPTATIVO</span>
+            <h2>Seu estudo de hoje, decidido por dados.</h2>
+            <p>O sistema cruza prioridade estratégica, desempenho, revisões D0/D7/D20 e sua trilha real para indicar o melhor próximo passo.</p>
           </div>
-          <input id="mapSearch" class="search-input" type="search" placeholder="Buscar disciplina, tópico ou subtópico…" />
+          <button class="primary" id="heroRegisterBtn">Registrar estudo</button>
         </div>
-        <div class="notice subtle">
-          <strong>Importante:</strong> este MVP não chama “peso de cobertura” de incidência histórica. A incidência da banca só entra quando existir uma base validada.
+
+        <div class="metrics" id="overviewMetrics"></div>
+
+        <div class="grid grid-2-1">
+          <article class="card focus-card">
+            <div class="card-head">
+              <div>
+                <span class="section-kicker">O QUE ESTUDAR AGORA?</span>
+                <h3 id="focusTitle">Calculando recomendação…</h3>
+              </div>
+              <div class="score-badge" id="focusScore">—</div>
+            </div>
+            <p class="subtle" id="focusReason"></p>
+            <div class="score-breakdown" id="focusBreakdown"></div>
+            <div class="focus-actions">
+              <button class="primary" id="focusStudyBtn">Estudar esta unidade</button>
+              <button class="secondary" data-open="schedule">Ver cronograma</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-head compact">
+              <div>
+                <span class="section-kicker">META DA SEMANA</span>
+                <h3>Execução</h3>
+              </div>
+              <span class="soft-pill" id="weekLabel">Semana atual</span>
+            </div>
+            <div class="goal-ring-wrap">
+              <div class="goal-ring" id="weeklyGoalRing"><span>0%</span></div>
+              <div>
+                <strong id="weeklyGoalText">0 de 5 sessões</strong>
+                <small>Meta experimental: 5 sessões/semana</small>
+              </div>
+            </div>
+            <div class="mini-stats" id="weeklyMiniStats"></div>
+          </article>
         </div>
-        <div id="mapSummary" class="map-summary"></div>
-        <div id="disciplineGrid" class="discipline-grid"></div>
+
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="card-head compact">
+              <div>
+                <span class="section-kicker">PRIORIDADES</span>
+                <h3>Fila adaptativa</h3>
+              </div>
+              <button class="link-button" data-open="progress">Ver tudo</button>
+            </div>
+            <div class="queue" id="adaptiveQueue"></div>
+          </article>
+
+          <article class="card">
+            <div class="card-head compact">
+              <div>
+                <span class="section-kicker">REVISÕES</span>
+                <h3>D0 · D7 · D20</h3>
+              </div>
+              <span class="soft-pill" id="reviewCountPill">0 pendentes</span>
+            </div>
+            <div class="review-list" id="reviewList"></div>
+          </article>
+        </div>
+
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="card-head compact">
+              <div>
+                <span class="section-kicker">MAPA DE CALOR</span>
+                <h3>Prioridade × desempenho</h3>
+              </div>
+            </div>
+            <div class="heatmap" id="heatmap"></div>
+            <p class="footnote">Alta prioridade + baixo desempenho = atacar primeiro. Sem evidência, o sistema mantém a incerteza explícita.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-head compact">
+              <div>
+                <span class="section-kicker">DESEMPENHO</span>
+                <h3>Por disciplina</h3>
+              </div>
+              <button class="link-button" data-open="charts">Abrir gráficos</button>
+            </div>
+            <div class="bars" id="overviewSubjectBars"></div>
+          </article>
+        </div>
       </section>
 
-      <section id="view-trilha" class="view">
-        <div class="section-toolbar">
-          <div>
-            <span class="kicker">ESTEIRA REAL</span>
-            <h2>P01–P18 · RL01–RL13 · REV01–REV06</h2>
-          </div>
-          <select id="trailFilter" class="search-input compact-input">
-            <option value="all">Todas</option>
-            <option value="priority">Prioridade alta</option>
-            <option value="review">Revisão vencida</option>
-            <option value="studied">Com evidência</option>
-            <option value="pending">Não estudadas</option>
-          </select>
-        </div>
-        <div id="trailTable" class="trail-table"></div>
-      </section>
-
-      <section id="view-simulador" class="view">
-        <div class="two-col simulator-layout">
-          <article class="panel">
-            <span class="kicker">BLUEPRINT</span>
-            <h2>Gerador de simulado</h2>
-            <p class="muted">O modo Cobertura distribui itens pela granularidade do edital. O modo Ataque reforça áreas com evidência de fraqueza.</p>
-
-            <div class="form-grid">
-              <label>
-                <span>Número de questões</span>
-                <input id="simQuestions" type="number" min="10" max="120" step="5" value="40" />
-              </label>
-              <label>
-                <span>Modo</span>
-                <select id="simMode">
-                  <option value="coverage">Cobertura do edital</option>
-                  <option value="attack">Ataque adaptativo</option>
+      <section class="view" id="view-register">
+        <div class="page-grid">
+          <article class="card">
+            <span class="section-kicker">REGISTRO DE ESTUDO</span>
+            <h2 class="page-heading">Registre uma sessão completa</h2>
+            <p class="subtle">Este é o núcleo de dados do planner. Cada registro atualiza desempenho, prioridade, gráficos e cronograma.</p>
+            <form id="studyForm" class="form-grid">
+              <label><span>Categoria</span>
+                <select id="studyCategory">
+                  <option>Estudo</option>
+                  <option>Revisão D0</option>
+                  <option>Revisão D7</option>
+                  <option>Revisão D20</option>
+                  <option>Questões</option>
+                  <option>Simulado</option>
                 </select>
               </label>
-            </div>
-            <button id="generateSimBtn" class="primary-btn full">Gerar blueprint</button>
-            <p class="microcopy">Blueprint ≠ banco de questões. Ele diz quantas questões buscar por disciplina/tópico.</p>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head compact">
-              <div>
-                <span class="kicker">SAÍDA</span>
-                <h2 id="simTitle">Ainda não gerado</h2>
-              </div>
-              <button id="copySimBtn" class="ghost-btn small" disabled>Copiar</button>
-            </div>
-            <div id="simOutput" class="sim-output empty-state">Escolha as opções e gere o primeiro blueprint.</div>
-          </article>
-        </div>
-      </section>
-
-      <section id="view-registro" class="view">
-        <div class="two-col register-layout">
-          <article class="panel">
-            <span class="kicker">EVIDÊNCIA</span>
-            <h2>Registrar sessão</h2>
-            <form id="sessionForm">
-              <div class="form-grid">
-                <label class="span-2">
-                  <span>Unidade da trilha</span>
-                  <select id="sessionCode" required></select>
-                </label>
-                <label>
-                  <span>Data</span>
-                  <input id="sessionDate" type="date" required />
-                </label>
-                <label>
-                  <span>Tempo (min)</span>
-                  <input id="sessionMinutes" type="number" min="0" max="600" value="60" />
-                </label>
-                <label>
-                  <span>Questões</span>
-                  <input id="sessionQuestions" type="number" min="0" max="500" value="20" />
-                </label>
-                <label>
-                  <span>Acertos</span>
-                  <input id="sessionCorrect" type="number" min="0" max="500" value="15" />
-                </label>
-                <label class="span-2">
-                  <span>Observação</span>
-                  <textarea id="sessionNotes" rows="4" placeholder="Ex.: dificuldade em orações subordinadas; revisar erro X."></textarea>
-                </label>
-              </div>
-              <button class="primary-btn full" type="submit">Salvar sessão e recalcular</button>
+              <label><span>Unidade</span><select id="studyUnit" required></select></label>
+              <label><span>Disciplina</span><select id="studySubject"></select></label>
+              <label><span>Data</span><input id="studyDate" type="date" required /></label>
+              <label><span>Tempo (min)</span><input id="studyMinutes" type="number" min="0" value="60" /></label>
+              <label><span>Questões</span><input id="studyQuestions" type="number" min="0" value="20" /></label>
+              <label><span>Acertos</span><input id="studyCorrect" type="number" min="0" value="15" /></label>
+              <label><span>Material</span><input id="studyMaterial" type="text" placeholder="Ex.: P03 · material principal" /></label>
+              <label class="full"><span>Observações</span><textarea id="studyNotes" rows="4" placeholder="Dificuldades, pontos de atenção, próximo passo…"></textarea></label>
+              <button class="primary full" type="submit">Salvar sessão</button>
             </form>
           </article>
 
-          <article class="panel">
-            <div class="panel-head compact">
-              <div>
-                <span class="kicker">HISTÓRICO LOCAL</span>
-                <h2>Sessões deste laboratório</h2>
-              </div>
+          <article class="card">
+            <div class="card-head compact">
+              <div><span class="section-kicker">HISTÓRICO</span><h3>Sessões registradas</h3></div>
             </div>
-            <div id="localSessionList" class="session-list"></div>
+            <div class="history" id="studyHistory"></div>
           </article>
         </div>
+      </section>
+
+      <section class="view" id="view-timer">
+        <div class="timer-layout">
+          <article class="card timer-card">
+            <div class="timer-tabs">
+              <button class="timer-mode active" data-mode="stopwatch">Cronômetro</button>
+              <button class="timer-mode" data-mode="pomodoro">Pomodoro</button>
+              <button class="timer-mode" data-mode="countdown">Temporizador</button>
+            </div>
+            <div class="timer-display" id="timerDisplay">00:00:00</div>
+            <div class="timer-progress"><span id="timerProgress"></span></div>
+            <div class="timer-controls">
+              <button class="primary" id="timerStart">Iniciar</button>
+              <button class="secondary" id="timerPause">Pausar</button>
+              <button class="secondary" id="timerReset">Zerar</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <span class="section-kicker">SESSÃO VINCULADA</span>
+            <h3>O que você está estudando?</h3>
+            <div class="form-grid one-col">
+              <label><span>Unidade</span><select id="timerUnit"></select></label>
+              <label><span>Disciplina</span><select id="timerSubject"></select></label>
+              <label><span>Meta de questões</span><input id="timerQuestionGoal" type="number" min="0" value="20" /></label>
+              <label><span>Temporizador (min)</span><input id="countdownMinutes" type="number" min="1" max="300" value="60" /></label>
+            </div>
+            <button class="primary full" id="timerSave">Salvar tempo como sessão</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-charts">
+        <div class="toolbar">
+          <div><span class="section-kicker">ANÁLISE</span><h2 class="page-heading">Gráficos de desempenho</h2></div>
+          <select id="chartPeriod" class="control"><option value="7">7 dias</option><option value="30" selected>30 dias</option><option value="90">90 dias</option><option value="all">Todo período</option></select>
+        </div>
+        <div class="metrics" id="chartMetrics"></div>
+        <div class="grid grid-2">
+          <article class="card"><div class="card-head compact"><div><span class="section-kicker">QUESTÕES</span><h3>Evolução diária</h3></div></div><div id="questionsChart" class="chart-box"></div></article>
+          <article class="card"><div class="card-head compact"><div><span class="section-kicker">ACERTOS</span><h3>Aproveitamento por disciplina</h3></div></div><div id="accuracyChart" class="bars"></div></article>
+        </div>
+        <div class="grid grid-2">
+          <article class="card"><div class="card-head compact"><div><span class="section-kicker">TEMPO</span><h3>Horas por semana</h3></div></div><div id="timeChart" class="chart-box"></div></article>
+          <article class="card"><div class="card-head compact"><div><span class="section-kicker">ERROS</span><h3>Pontos frágeis</h3></div></div><div id="errorChart" class="bars"></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="view-schedule">
+        <div class="page-grid">
+          <article class="card">
+            <span class="section-kicker">CRONOGRAMA</span>
+            <h2 class="page-heading">Monte uma semana ponderada</h2>
+            <div class="form-grid">
+              <label><span>Início</span><input id="scheduleStart" type="date" /></label>
+              <label><span>Dias de estudo</span><input id="scheduleDays" type="number" min="1" max="7" value="5" /></label>
+              <label><span>Blocos por dia</span><input id="scheduleBlocks" type="number" min="1" max="6" value="2" /></label>
+              <label><span>Minutos por bloco</span><input id="scheduleMinutes" type="number" min="20" max="180" value="60" /></label>
+            </div>
+            <button class="primary full" id="generateSchedule">Gerar cronograma adaptativo</button>
+            <p class="footnote">O cronograma puxa primeiro revisões vencidas e depois a fila de maior score.</p>
+          </article>
+          <article class="card">
+            <div class="card-head compact"><div><span class="section-kicker">SEMANA</span><h3>Plano gerado</h3></div></div>
+            <div id="scheduleOutput" class="schedule-list empty">Gere seu cronograma para visualizar os blocos.</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-progress">
+        <div class="metrics" id="progressMetrics"></div>
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="card-head compact"><div><span class="section-kicker">ESTEIRA</span><h3>Português · RLM · Revisões</h3></div></div>
+            <div id="trackProgress" class="progress-groups"></div>
+          </article>
+          <article class="card">
+            <div class="card-head compact"><div><span class="section-kicker">REVISÕES</span><h3>Status D0/D7/D20</h3></div></div>
+            <div id="revisionProgress" class="progress-groups"></div>
+          </article>
+        </div>
+        <article class="card">
+          <div class="toolbar">
+            <div><span class="section-kicker">UNIDADES</span><h3>Progresso detalhado</h3></div>
+            <select id="progressFilter" class="control"><option value="all">Todas</option><option value="critical">Críticas</option><option value="studied">Com evidência</option><option value="pending">Não estudadas</option></select>
+          </div>
+          <div id="progressTable" class="data-table"></div>
+        </article>
+      </section>
+
+      <section class="view" id="view-simulator">
+        <div class="page-grid">
+          <article class="card">
+            <span class="section-kicker">SIMULADOR</span>
+            <h2 class="page-heading">Blueprint inteligente</h2>
+            <p class="subtle">Gere uma distribuição de questões por cobertura do edital ou concentre o treino nas fragilidades.</p>
+            <div class="form-grid">
+              <label><span>Questões</span><input id="simQuestions" type="number" min="10" max="120" value="40" /></label>
+              <label><span>Modo</span><select id="simMode"><option value="coverage">Cobertura</option><option value="attack">Ataque adaptativo</option></select></label>
+            </div>
+            <button class="primary full" id="generateSim">Gerar blueprint</button>
+          </article>
+          <article class="card">
+            <div class="card-head compact"><div><span class="section-kicker">DISTRIBUIÇÃO</span><h3 id="simTitle">Nenhum simulado gerado</h3></div><button class="link-button" id="copySim" disabled>Copiar</button></div>
+            <div id="simOutput" class="sim-output empty">A distribuição aparecerá aqui.</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-notes">
+        <div class="page-grid">
+          <article class="card">
+            <span class="section-kicker">ANOTAÇÕES</span>
+            <h2 class="page-heading">Crie notas vinculadas ao estudo</h2>
+            <div class="form-grid one-col">
+              <label><span>Disciplina</span><select id="noteSubject"></select></label>
+              <label><span>Título</span><input id="noteTitle" type="text" placeholder="Ex.: Regência — armadilhas" /></label>
+              <label><span>Anotação</span><textarea id="noteBody" rows="8" placeholder="Escreva aqui…"></textarea></label>
+            </div>
+            <button class="primary full" id="saveNote">Salvar anotação</button>
+          </article>
+          <article class="card">
+            <div class="toolbar"><div><span class="section-kicker">ARQUIVO</span><h3>Minhas anotações</h3></div><input id="noteSearch" class="control" type="search" placeholder="Buscar…" /></div>
+            <div id="notesList" class="notes-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-subjects">
+        <div class="toolbar">
+          <div><span class="section-kicker">EDITAL VERTICALIZADO</span><h2 class="page-heading">Disciplinas e assuntos</h2></div>
+          <input id="subjectSearch" class="control wide" type="search" placeholder="Buscar disciplina, assunto ou subtópico…" />
+        </div>
+        <div class="notice"><strong>Base histórica 2022.</strong> O laboratório não chama peso estratégico de “incidência histórica” sem uma amostra validada da banca.</div>
+        <div id="subjectSummary" class="summary-pills"></div>
+        <div id="subjectGrid" class="subject-grid"></div>
       </section>
     </main>
   </div>
 
-  <template id="toastTemplate">
-    <div class="toast"></div>
-  </template>
-
+  <div id="toast" class="toast" aria-live="polite"></div>
   <script src="./app.js" defer></script>
 </body>
 </html>
