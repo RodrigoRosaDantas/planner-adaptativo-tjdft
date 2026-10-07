@@ -1,0 +1,2575 @@
+{
+  "schemaVersion": 1,
+  "createdFor": "planner-adaptativo-tjdft",
+  "generatedAt": "2026-10-07T19:32:33.337Z",
+  "source": {
+    "repository": "RodrigoRosaDantas/tjdft-dashboard",
+    "snapshotSyncedAt": "2026-10-02T20:08:51.541Z",
+    "snapshotAsOf": "2026-10-02T20:08:51.525Z",
+    "editalVersion": "base-2022",
+    "editalKind": "historical-base",
+    "note": "Pré-edital. O Edital 2022 é base histórica; alterações legais e eventual edital futuro prevalecem quando publicados."
+  },
+  "cargos": {
+    "tecnico": {
+      "id": "tecnico",
+      "label": "Técnico Judiciário — Área Administrativa",
+      "disciplines": [
+        {
+          "id": "D01",
+          "name": "Língua Portuguesa",
+          "group": "Conhecimentos básicos",
+          "canonicalSubject": "Língua Portuguesa",
+          "items": [
+            {
+              "topic": "Elementos de construção do texto e seu sentido",
+              "subtopic": "Gêneros textuais (literário, não literário, narrativo, descritivo e argumentativo)"
+            },
+            {
+              "topic": "Elementos de construção do texto e seu sentido",
+              "subtopic": "Interpretação e organização interna do texto"
+            },
+            {
+              "topic": "Semântica",
+              "subtopic": "Sentido e emprego dos vocábulos e campos semânticos"
+            },
+            {
+              "topic": "Semântica",
+              "subtopic": "Emprego de tempos e modos dos verbos em português"
+            },
+            {
+              "topic": "Morfologia",
+              "subtopic": "Reconhecimento, emprego e sentido das classes gramaticais"
+            },
+            {
+              "topic": "Morfologia",
+              "subtopic": "Processos de formação de palavras"
+            },
+            {
+              "topic": "Morfologia",
+              "subtopic": "Mecanismos de flexão dos nomes e verbos"
+            },
+            {
+              "topic": "Sintaxe",
+              "subtopic": "Frase, oração e período; termos da oração"
+            },
+            {
+              "topic": "Sintaxe",
+              "subtopic": "Processos de coordenação e subordinação"
+            },
+            {
+              "topic": "Sintaxe",
+              "subtopic": "Concordância nominal e verbal"
+            },
+            {
+              "topic": "Sintaxe",
+              "subtopic": "Transitividade e regência de nomes e verbos"
+            },
+            {
+              "topic": "Sintaxe",
+              "subtopic": "Padrões gerais de colocação pronominal no português"
+            },
+            {
+              "topic": "Sintaxe",
+              "subtopic": "Mecanismos de coesão textual"
+            },
+            {
+              "topic": "Ortografia",
+              "subtopic": "Ortografia oficial"
+            },
+            {
+              "topic": "Acentuação Gráfica",
+              "subtopic": "Regras de acentuação gráfica"
+            },
+            {
+              "topic": "Crase",
+              "subtopic": "Emprego do sinal indicativo de crase"
+            },
+            {
+              "topic": "Pontuação",
+              "subtopic": "Emprego dos sinais de pontuação"
+            },
+            {
+              "topic": "Reescrita de Frases",
+              "subtopic": "Substituição, deslocamento e paralelismo sintático/semântico"
+            },
+            {
+              "topic": "Variação Linguística",
+              "subtopic": "Variação linguística e norma culta"
+            }
+          ]
+        },
+        {
+          "id": "D02",
+          "name": "Ética no Serviço Público",
+          "group": "Conhecimentos básicos",
+          "canonicalSubject": "Ética; Regimento Interno; Lei de Organização Judiciária",
+          "items": [
+            {
+              "topic": "Conceitos Fundamentais",
+              "subtopic": "Ética e moral; ética, princípios e valores"
+            },
+            {
+              "topic": "Ética e Democracia",
+              "subtopic": "Exercício da cidadania e ética na função pública / setor público"
+            },
+            {
+              "topic": "Regime Jurídico dos Servidores Civis",
+              "subtopic": "Deveres e proibições dos servidores públicos (Lei nº 8.112/1990)"
+            },
+            {
+              "topic": "Regime Jurídico dos Servidores Civis",
+              "subtopic": "Acumulação de cargos, responsabilidade civil, administrativa e penal (Lei nº 8.112/1990)"
+            },
+            {
+              "topic": "Regime Jurídico dos Servidores Civis",
+              "subtopic": "Regime disciplinar, penalidades e processo disciplinar (Lei nº 8.112/1990)"
+            },
+            {
+              "topic": "Improbidade Administrativa",
+              "subtopic": "Disposições gerais e princípios (Lei nº 8.429/1992 e alterações)"
+            },
+            {
+              "topic": "Improbidade Administrativa",
+              "subtopic": "Atos de improbidade administrativa: enriquecimento ilícito, lesão ao erário e atentado aos princípios (Lei nº 8.429/1992)"
+            },
+            {
+              "topic": "Improbidade Administrativa",
+              "subtopic": "Penas, declaração de bens e procedimento administrativo/judicial (Lei nº 8.429/1992)"
+            },
+            {
+              "topic": "Código de Ética do TJDFT",
+              "subtopic": "Código de Ética dos Servidores do TJDFT (Resolução TJDFT nº 9/2019)"
+            },
+            {
+              "topic": "Comissão de Ética do TJDFT",
+              "subtopic": "Atribuições e funcionamento da Comissão de Ética (Portaria Conjunta nº 76/2020)"
+            }
+          ]
+        },
+        {
+          "id": "D03",
+          "name": "Regimento Interno do TJDFT",
+          "group": "Conhecimentos básicos",
+          "canonicalSubject": "Ética; Regimento Interno; Lei de Organização Judiciária",
+          "items": [
+            {
+              "topic": "Estrutura e Composição",
+              "subtopic": "Órgãos do Tribunal de Justiça, composição e funcionamento (Portaria GPR nº 354/2016 e Emendas)"
+            },
+            {
+              "topic": "Órgãos Julgadores",
+              "subtopic": "Tribunal Pleno, Conselho da Magistratura, Câmaras e Turmas Cíveis e Criminais (Portaria GPR nº 354/2016)"
+            },
+            {
+              "topic": "Administração e Magistrados",
+              "subtopic": "Eleição para cargos de direção, atribuições do Presidente, Vice-Presidentes e Corregedor (Portaria GPR nº 354/2016)"
+            },
+            {
+              "topic": "Processos no Tribunal",
+              "subtopic": "Distribuição, relatoria, pauta e sessões de julgamento (Portaria GPR nº 354/2016)"
+            },
+            {
+              "topic": "Procedimentos Especiais e Recursos",
+              "subtopic": "Arguição de inconstitucionalidade, uniformização de jurisprudência e recursos regimentais (Portaria GPR nº 354/2016)"
+            }
+          ]
+        },
+        {
+          "id": "D04",
+          "name": "Lei da Organização Judiciária do DF e dos Territórios",
+          "group": "Conhecimentos básicos",
+          "canonicalSubject": "Ética; Regimento Interno; Lei de Organização Judiciária",
+          "items": [
+            {
+              "topic": "Disposições Preliminares e Divisão",
+              "subtopic": "Autonomia, composição e divisão judiciária do DF e Territórios (Lei nº 11.697/2008)"
+            },
+            {
+              "topic": "Órgãos do TJDFT e Competências",
+              "subtopic": "Composição, atribuições e funcionamento do Tribunal e seus órgãos (Lei nº 11.697/2008)"
+            },
+            {
+              "topic": "Juízes de Direito e Substitutos",
+              "subtopic": "Jurisdição, competência dos Juízos e Varas Especializadas (Lei nº 11.697/2008)"
+            },
+            {
+              "topic": "Serviços Auxiliares da Justiça",
+              "subtopic": "Serventias judiciais, secretarias e cartórios (Lei nº 11.697/2008)"
+            }
+          ]
+        },
+        {
+          "id": "D05",
+          "name": "Provimento Geral da Corregedoria Aplicado aos Juízes e Ofícios Judiciais",
+          "group": "Conhecimentos básicos",
+          "canonicalSubject": "Provimento Geral da Corregedoria; Provimento Judicial aplicado ao PJe",
+          "items": [
+            {
+              "topic": "Funcionamento dos Ofícios Judiciais",
+              "subtopic": "Disposições gerais e rotinas de atendimento nos cartórios (Provimento Geral de 10/10/2014)"
+            },
+            {
+              "topic": "Atos e Prazos Cartorários",
+              "subtopic": "Escrituração, registros, expedição de mandados e prazos (Provimento Geral)"
+            },
+            {
+              "topic": "Tramitação de Processos Físicos",
+              "subtopic": "Normas sobre guarda, restauração e tramitação (Provimento nº 07/2010, alt. p/ Prov. nº 01/2012 e nº 04/2013)"
+            },
+            {
+              "topic": "Procedimentos Corregedoriais",
+              "subtopic": "Fiscalização das serventias e deveres funcionais dos servidores (Provimento nº 03/2011)"
+            }
+          ]
+        },
+        {
+          "id": "D06",
+          "name": "Provimento Judicial Aplicado ao Processo Judicial Eletrônico - PJe",
+          "group": "Conhecimentos básicos",
+          "canonicalSubject": "Provimento Geral da Corregedoria; Provimento Judicial aplicado ao PJe",
+          "items": [
+            {
+              "topic": "Cadastro e Acesso ao PJe",
+              "subtopic": "Cadastramento, credenciamento e acesso de usuários no PJe (Provimento PJe no DJe de 21/08/2017)"
+            },
+            {
+              "topic": "Distribuição e Tramitação Eletrônica",
+              "subtopic": "Distribuição, peticionamento e prática de atos processuais no PJe (Provimento PJe)"
+            },
+            {
+              "topic": "Comunicação de Atos e Indisponibilidade",
+              "subtopic": "Citações, intimações eletrônicas e regras de indisponibilidade do PJe (Provimento PJe)"
+            }
+          ]
+        },
+        {
+          "id": "D07",
+          "name": "Noções de Administração de Recursos Humanos e Gestão Pública",
+          "group": "Conhecimentos específicos",
+          "canonicalSubject": "Administração Pública; gestão de pessoas; orçamento público",
+          "items": [
+            {
+              "topic": "Modelos de Gestão de Pessoas",
+              "subtopic": "Evolução dos modelos de gestão de pessoas e gestão estratégica de pessoas"
+            },
+            {
+              "topic": "Processos de Gestão de Pessoas",
+              "subtopic": "Processos de agregar, aplicar, recompensar, desenvolver, manter e monitorar pessoas"
+            },
+            {
+              "topic": "Treinamento e Desenvolvimento",
+              "subtopic": "Levantamento de necessidades, planejamento, execução e avaliação de T&D"
+            },
+            {
+              "topic": "Avaliação do Desempenho Humano",
+              "subtopic": "Métodos, objetivos e tendências em avaliação de desempenho humano"
+            },
+            {
+              "topic": "Modelagem do Trabalho",
+              "subtopic": "Descrição e análise de cargos, modelos de desenho de cargos e coleta de dados"
+            },
+            {
+              "topic": "Motivação Organizacional",
+              "subtopic": "Conceitos e principais teorias motivacionais (Maslow, Herzberg, Vroom, etc.)"
+            },
+            {
+              "topic": "Gestão por Competências",
+              "subtopic": "Conceito de competência, mapeamento, atração e desenvolvimento por competências"
+            },
+            {
+              "topic": "Gestão de Processos de Mudança",
+              "subtopic": "Conceito de mudança, inovação organizacional e resistência à mudança"
+            },
+            {
+              "topic": "Análise Ambiental e Estratégias",
+              "subtopic": "Análise dos ambientes interno e externo para sustentação da mudança organizacional"
+            },
+            {
+              "topic": "Diretrizes Organizacionais",
+              "subtopic": "Missão, visão de futuro, valores e indicadores de desempenho em gestão de pessoas"
+            },
+            {
+              "topic": "Modelos de Gestão Pública",
+              "subtopic": "Modelos patrimonialista, burocrático (Weber) e gerencial"
+            },
+            {
+              "topic": "Eficacia e Efetividade na Gestão Pública",
+              "subtopic": "Avaliação e mensuração do desempenho governamental"
+            },
+            {
+              "topic": "Orçamento Público e Princípios",
+              "subtopic": "Princípios orçamentários, diretrizes orçamentárias (LDO/LOA/PPA) e processo orçamentário"
+            },
+            {
+              "topic": "Estágios da Receita e Despesa",
+              "subtopic": "Conceito, categorias de classificação e estágios da receita e da despesa públicas"
+            },
+            {
+              "topic": "Mecanismos Especiais de Despesa",
+              "subtopic": "Suprimento de fundos, restos a pagar e despesas de exercícios anteriores"
+            },
+            {
+              "topic": "MCASP - Procedimentos Orçamentários",
+              "subtopic": "Procedimentos Contábeis Orçamentários conforme o MCASP (9ª ed., Portaria STN/SOF/ME nº 117/2021)"
+            },
+            {
+              "topic": "Licitações Públicas",
+              "subtopic": "Fases, modalidades, dispensa e inexigibilidade de licitação pública"
+            }
+          ]
+        },
+        {
+          "id": "D08",
+          "name": "Noções de Direito Constitucional",
+          "group": "Conhecimentos específicos",
+          "canonicalSubject": "Direito Constitucional",
+          "items": [
+            {
+              "topic": "Teoria da Constituição",
+              "subtopic": "Conceito, classificações da Constituição e princípios fundamentais (Arts. 1º a 4º da CF/88)"
+            },
+            {
+              "topic": "Direitos e Deveres Individuais/Coletivos",
+              "subtopic": "Direitos e deveres individuais e coletivos e remédios constitucionais (Art. 5º da CF/88)"
+            },
+            {
+              "topic": "Direitos Sociais",
+              "subtopic": "Direitos sociais e trabalhadores (Arts. 6º a 11 da CF/88)"
+            },
+            {
+              "topic": "Nacionalidade e Cidadania",
+              "subtopic": "Nacionalidade, brasileiros natos/naturalizados e cidadania (Arts. 12 e 13 da CF/88)"
+            },
+            {
+              "topic": "Direitos Políticos e Partidos Políticos",
+              "subtopic": "Alistamento, elegibilidade, perda/suspensão de direitos políticos e partidos (Arts. 14 a 17 da CF/88)"
+            },
+            {
+              "topic": "Organização Político-Administrativa",
+              "subtopic": "União, Estados, Distrito Federal, Municípios e Territórios (Arts. 18 a 33 da CF/88)"
+            },
+            {
+              "topic": "Administração Pública",
+              "subtopic": "Disposições gerais da administração pública e princípios (Arts. 37 e 38 da CF/88)"
+            },
+            {
+              "topic": "Servidores Públicos",
+              "subtopic": "Regras e direitos constitucionais dos servidores públicos (Arts. 39 a 41 da CF/88)"
+            },
+            {
+              "topic": "Poder Judiciário - Disposições Gerais",
+              "subtopic": "Disposições gerais e órgãos do Poder Judiciário (Arts. 92 a 100 da CF/88)"
+            },
+            {
+              "topic": "Conselho Nacional de Justiça (CNJ)",
+              "subtopic": "Composição, estrutura e competências constitucionais do CNJ (Art. 103-B da CF/88)"
+            },
+            {
+              "topic": "Funções Essenciais à Justiça",
+              "subtopic": "Ministério Público, Advocacia Pública, Advocacia e Defensoria Pública (Arts. 127 a 135 da CF/88)"
+            }
+          ]
+        },
+        {
+          "id": "D09",
+          "name": "Noções de Direito Administrativo",
+          "group": "Conhecimentos específicos",
+          "canonicalSubject": "Direito Administrativo",
+          "items": [
+            {
+              "topic": "Organização Administrativa",
+              "subtopic": "Administração direta e indireta, centralizada e descentralizada, desconcentração"
+            },
+            {
+              "topic": "Princípios da Administração Pública",
+              "subtopic": "Princípios expressos (LIMPE) e implícitos da administração pública"
+            },
+            {
+              "topic": "Órgãos e Agentes Públicos",
+              "subtopic": "Conceito, classificação de órgãos públicos e espécies de agentes públicos"
+            },
+            {
+              "topic": "Regime Jurídico dos Servidores",
+              "subtopic": "Provimento, vacância, direitos, vantagens e licenças (Lei nº 8.112/1990)"
+            },
+            {
+              "topic": "Processo Administrativo",
+              "subtopic": "Processo Administrativo Federal (Lei nº 9.784/1999) e no DF (Lei DF nº 2.834/2001)"
+            },
+            {
+              "topic": "Poderes Administrativos",
+              "subtopic": "Poder vinculado, discricionário, hierárquico, disciplinar, regulamentar e de polícia"
+            },
+            {
+              "topic": "Ato Administrativo",
+              "subtopic": "Conceito, requisitos, atributos, classificação, espécies e invalidação (anulação e revogação)"
+            },
+            {
+              "topic": "Controle da Administração",
+              "subtopic": "Controle administrativo, judicial, legislativo e pelos Tribunais de Contas"
+            },
+            {
+              "topic": "Improbidade Administrativa",
+              "subtopic": "Sujeitos passivos/ativos, atos de improbidade e sanções (Lei nº 8.429/1992 e alteração p/ Lei nº 14.230/2021)"
+            },
+            {
+              "topic": "Responsabilidade Civil do Estado",
+              "subtopic": "Responsabilidade objetiva do Estado, teoria do risco administrativo e ação regressiva (Art. 37, §6º da CF/88)"
+            },
+            {
+              "topic": "Licitações e Contratos",
+              "subtopic": "Regime geral de licitações e contratos (Leis nºs 8.666/1993, 10.520/2002 e 14.133/2021)"
+            }
+          ]
+        },
+        {
+          "id": "D10",
+          "name": "Noções de Direito Civil",
+          "group": "Conhecimentos específicos",
+          "canonicalSubject": "Direito Civil; Lei de Introdução às Normas do Direito Brasileiro",
+          "items": [
+            {
+              "topic": "LINDB - Introdução às Normas do Direito BR",
+              "subtopic": "Vigência, aplicação, interpretação, integração e eficácia espacial/temporal das leis (DL nº 4.657/1942)"
+            },
+            {
+              "topic": "Pessoas Naturais",
+              "subtopic": "Personalidade, capacidade, nome, estado e direitos da personalidade (Arts. 1º a 21 do Código Civil)"
+            },
+            {
+              "topic": "Domicílio Civil",
+              "subtopic": "Conceito, espécies e regras de domicílio da pessoa natural e jurídica (Arts. 70 a 78 do Código Civil)"
+            },
+            {
+              "topic": "Pessoas Jurídicas",
+              "subtopic": "Disposições gerais, constituição, domicílio, associações e fundações (Arts. 40 a 69 do Código Civil)"
+            },
+            {
+              "topic": "Bens",
+              "subtopic": "Classes de bens: considerados em si mesmos, reciprocamente e públicos (Arts. 79 a 103 do Código Civil)"
+            },
+            {
+              "topic": "Fatos e Atos Jurídicos",
+              "subtopic": "Fatos jurídicos, atos jurídicos lícitos e ilícitos (Arts. 104 a 114, 185 a 188 do Código Civil)"
+            },
+            {
+              "topic": "Negócio Jurídico",
+              "subtopic": "Requisitos de validade, defeitos do negócio jurídico e invalidade (Arts. 104 a 184 do Código Civil)"
+            },
+            {
+              "topic": "Prescrição e Decadência",
+              "subtopic": "Disposições gerais, prazos, causas de impedimento, suspensão e interrupção (Arts. 189 a 211 do Código Civil)"
+            }
+          ]
+        },
+        {
+          "id": "D11",
+          "name": "Noções de Direito Processual Civil",
+          "group": "Conhecimentos específicos",
+          "canonicalSubject": "Direito Processual Civil",
+          "items": [
+            {
+              "topic": "Princípios do Processo Civil",
+              "subtopic": "Devido processo legal, contraditório, ampla defesa e juiz natural (Arts. 1º a 12 do CPC/2015)"
+            },
+            {
+              "topic": "Jurisdição e Ação",
+              "subtopic": "Conceito, características, princípio da inércia, condições e elementos da ação (Arts. 16 a 20 do CPC/2015)"
+            },
+            {
+              "topic": "Cooperação Internacional",
+              "subtopic": "Disposições gerais, auxílio direto e carta rogatória (Arts. 26 a 41 do CPC/2015)"
+            },
+            {
+              "topic": "Competência Processual Civil",
+              "subtopic": "Competência interna, territorial, funcional, modificação e declaração de incompetência (Arts. 42 a 66 do CPC/2015)"
+            },
+            {
+              "topic": "Pressupostos e Preclusão",
+              "subtopic": "Pressupostos de existência/validade e espécies de preclusão no CPC/2015"
+            },
+            {
+              "topic": "Sujeitos do Processo",
+              "subtopic": "Capacidade processual/postulatória, deveres, sucessão/substituição de partes e procuradores (Arts. 70 a 112 do CPC/2015)"
+            },
+            {
+              "topic": "Litisconsórcio e Terceiros",
+              "subtopic": "Litisconsórcio, denunciação da lide, chamamento ao processo, IDPJ e amicus curiae (Arts. 113 a 138 do CPC/2015)"
+            },
+            {
+              "topic": "Juiz e Auxiliares da Justiça",
+              "subtopic": "Poderes, deveres, impedimentos, suspeição e auxiliares da justiça (Arts. 139 a 175 do CPC/2015)"
+            },
+            {
+              "topic": "Funções Essenciais à Justiça",
+              "subtopic": "Atuação do Ministério Público, Advocacia Pública e Defensoria Pública (Arts. 176 a 187 do CPC/2015)"
+            },
+            {
+              "topic": "Atos Processuais e Prazos",
+              "subtopic": "Forma, tempo, lugar, prazos, comunicação dos atos, nulidades, distribuição e valor da causa (Arts. 188 a 293 do CPC/2015)"
+            },
+            {
+              "topic": "Tutela Provisória",
+              "subtopic": "Tutela de urgência (cautelar e antecipada) e tutela de evidência (Arts. 294 a 311 do CPC/2015)"
+            },
+            {
+              "topic": "Formação, Suspensão e Extinção",
+              "subtopic": "Formação, causas de suspensão e hipóteses de extinção do processo (Arts. 312 a 317 do CPC/2015)"
+            },
+            {
+              "topic": "Procedimento Comum",
+              "subtopic": "Petição inicial, requisitos, indeferimento, improcedência liminar e audiência de conciliação/mediação (Arts. 318 a 334 do CPC/2015)"
+            },
+            {
+              "topic": "Resposta do Réu e Saneamento",
+              "subtopic": "Contestação, reconvenção, revelia, providências preliminares e julgamento conforme o estado do processo (Arts. 335 a 357 do CPC/2015)"
+            },
+            {
+              "topic": "Provas e Audiência de Instrução",
+              "subtopic": "Teoria geral da prova, meios de prova e audiência de instrução e julgamento (Arts. 369 a 484 do CPC/2015)"
+            },
+            {
+              "topic": "Sentença e Coisa Julgada",
+              "subtopic": "Atos judiciais, requisitos da sentença, efeitos e coisa julgada formal/material (Arts. 485 a 508 do CPC/2015)"
+            },
+            {
+              "topic": "Cumprimento de Sentença",
+              "subtopic": "Cumprimento provisório e definitivo de sentença e impugnação (Arts. 513 a 538 do CPC/2015)"
+            },
+            {
+              "topic": "Recursos em Espécie",
+              "subtopic": "Disposições gerais, Apelação, Agravo de Instrumento, Agravo Interno, Embargos de Declaração e Recursos para STF/STJ (Arts. 994 a 1.044 do CPC/2015)"
+            },
+            {
+              "topic": "Controle Judicial e MS",
+              "subtopic": "Controle judicial dos atos administrativos e Mandado de Segurança (Lei nº 12.016/2009)"
+            },
+            {
+              "topic": "Processo Judicial Eletrônico",
+              "subtopic": "Lei do Processo Eletrônico (Lei nº 11.419/2006)"
+            }
+          ]
+        },
+        {
+          "id": "D12",
+          "name": "Noções de Direito Penal",
+          "group": "Conhecimentos específicos",
+          "canonicalSubject": "Direito Penal",
+          "items": [
+            {
+              "topic": "Aplicação da Lei Penal",
+              "subtopic": "Princípios da legalidade e anterioridade; lei penal no tempo e no espaço (Arts. 1º a 7º do Código Penal)"
+            },
+            {
+              "topic": "Eficácia e Prazos Penais",
+              "subtopic": "Pena cumprida no estrangeiro, eficácia de sentença estrangeira, contagem de prazo e frações de pena (Arts. 8º a 11 do Código Penal)"
+            },
+            {
+              "topic": "Interpretação e Conflito de Normas",
+              "subtopic": "Interpretação, analogia, irretroatividade da lei penal e conflito aparente de normas penais"
+            },
+            {
+              "topic": "Teoria do Crime - Fato Típico",
+              "subtopic": "Fato típico, tipo objetivo e subjetivos (dolo e culpa), conduta, resultado e nexo causal (Arts. 13 a 18 do Código Penal)"
+            },
+            {
+              "topic": "Consumação e Tentativa",
+              "subtopic": "Crime consumado, tentado, desistência voluntária, arrependimento eficaz/posterior e crime impossível (Arts. 14 a 17 do Código Penal)"
+            },
+            {
+              "topic": "Ilicitude e Culpabilidade",
+              "subtopic": "Causas de exclusão de ilicitude (legítima defesa, estado de necessidade, etc.) e causas dirimentes de culpabilidade (Arts. 20 a 28 do Código Penal)"
+            },
+            {
+              "topic": "Crimes Contra a Pessoa",
+              "subtopic": "Crimes contra a vida, lesões corporais, periclitação da vida e crimes contra a honra (Arts. 121 a 154-B do Código Penal)"
+            },
+            {
+              "topic": "Crimes Contra o Patrimônio",
+              "subtopic": "Furto, roubo, extorsão, usurpação, estelionato e receptação (Arts. 155 a 183 do Código Penal)"
+            },
+            {
+              "topic": "Crimes Contra a Adm. Pública",
+              "subtopic": "Crimes praticados por funcionário público e por particular contra a administração em geral (Arts. 312 a 359-H do Código Penal)"
+            },
+            {
+              "topic": "Disposições Constitucionais Penais",
+              "subtopic": "Princípios e garantias constitucionais penais (Art. 5º da CF/88)"
+            },
+            {
+              "topic": "Crimes Hediondos",
+              "subtopic": "Lei dos Crimes Hediondos (Lei nº 8.072/1990)"
+            },
+            {
+              "topic": "Abuso de Autoridade",
+              "subtopic": "Lei de Abuso de Autoridade (Lei nº 13.869/2019)"
+            },
+            {
+              "topic": "Estatuto da Criança e do Adolescente",
+              "subtopic": "Crimes praticados contra a criança e o adolescente (Lei nº 8.069/1990, Arts. 225 a 244-B)"
+            }
+          ]
+        },
+        {
+          "id": "D13",
+          "name": "Noções de Direito Processual Penal",
+          "group": "Conhecimentos específicos",
+          "canonicalSubject": "Direito Processual Penal",
+          "items": [
+            {
+              "topic": "Disposições Preliminares do CPP",
+              "subtopic": "Princípios gerais e disposições preliminares do Código de Processo Penal (Arts. 1º a 3º-F do CPP)"
+            },
+            {
+              "topic": "Inquérito Policial",
+              "subtopic": "Conceito, características, instauração, indiciamento, prazos e encerramento do inquérito (Arts. 4º a 23 do CPP)"
+            },
+            {
+              "topic": "Ação Penal",
+              "subtopic": "Ação penal pública (incondicionada e condicionada) e ação penal privada (Arts. 24 a 62 do CPP)"
+            },
+            {
+              "topic": "Sujeitos do Processo Penal",
+              "subtopic": "Juiz, Ministério Público, acusado, defensor, assistentes, auxiliares da justiça, peritos e intérpretes (Arts. 251 a 281 do CPP)"
+            },
+            {
+              "topic": "Citações e Intimações",
+              "subtopic": "Espécies de citação (pessoal, hora certa, edital) e intimações no processo penal (Arts. 351 a 372 do CPP)"
+            },
+            {
+              "topic": "Sentença Penal",
+              "subtopic": "Conceito, estrutura, requisitos, publicação e efeitos da sentença penal (Arts. 381 a 393 do CPP)"
+            },
+            {
+              "topic": "Processo Comum e Instrução",
+              "subtopic": "Procedimento comum (ordinário e sumário) e instrução criminal (Arts. 394 a 405 do CPP)"
+            },
+            {
+              "topic": "Tribunal do Júri - 1ª Fase",
+              "subtopic": "Instrução preliminar, pronúncia, impronúncia e absolvição sumária (Arts. 406 a 421 do CPP)"
+            },
+            {
+              "topic": "Tribunal do Júri - 2ª Fase",
+              "subtopic": "Preparação, alistamento, função do jurado, sessão de julgamento, debates, quesitos e sentença (Arts. 422 a 497 do CPP)"
+            },
+            {
+              "topic": "Prisão e Liberdade Provisória",
+              "subtopic": "Prisão em flagrante, preventiva, temporária, domiciliar, medidas cautelares e liberdade provisória (Arts. 282 a 350 do CPP e Lei nº 7.960/1989)"
+            },
+            {
+              "topic": "Crimes de Resp. de Funcionários",
+              "subtopic": "Processo e julgamento dos crimes de responsabilidade dos funcionários públicos (Arts. 513 a 518 do CPP)"
+            },
+            {
+              "topic": "Habeas Corpus",
+              "subtopic": "Conceito, cabimento, procedimento e julgamento do Habeas Corpus (Arts. 647 a 667 do CPP)"
+            },
+            {
+              "topic": "Disposições Constitucionais",
+              "subtopic": "Garantias constitucionais do processo penal (Art. 5º da CF/88)"
+            }
+          ]
+        }
+      ]
+    },
+    "analista": {
+      "id": "analista",
+      "label": "Analista Judiciário — Administração",
+      "disciplines": [
+        {
+          "id": "A01",
+          "name": "Administração geral e comportamento organizacional",
+          "group": "Específico",
+          "canonicalSubject": "Administração geral; comportamento organizacional",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "Comportamento organizacional",
+              "order": 1
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "organização como sistema social",
+              "order": 2
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "cultura",
+              "order": 3
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "motivação",
+              "order": 4
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "liderança",
+              "order": 5
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "comunicação",
+              "order": 6
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "delegação",
+              "order": 7
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "processo decisório",
+              "order": 8
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "decisões programadas e não programadas",
+              "order": 9
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "modelo racional",
+              "order": 10
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "ferramentas de apoio",
+              "order": 11
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "heurísticas",
+              "order": 12
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "decisão em grupo",
+              "order": 13
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "qualidade e produtividade",
+              "order": 14
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "Deming",
+              "order": 15
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "relação cliente/fornecedor",
+              "order": 16
+            },
+            {
+              "topic": "Administração geral; comportamento organizacional",
+              "subtopic": "ferramentas da qualidade.",
+              "order": 17
+            }
+          ]
+        },
+        {
+          "id": "A02",
+          "name": "Constitucional e Administrativo",
+          "group": "Núcleo comum",
+          "canonicalSubject": "Direito Constitucional; Direito Administrativo",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "Noções de Direito Constitucional: conceito, classificações, princípios fundamentais",
+              "order": 1
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "direitos e garantias fundamentais",
+              "order": 2
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "organização político-administrativa",
+              "order": 3
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "Administração Pública e servidores",
+              "order": 4
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "Poder Judiciário e competências",
+              "order": 5
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "CNJ",
+              "order": 6
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "funções essenciais à Justiça. Noções de Direito Administrativo: organização administrativa",
+              "order": 7
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "Administração direta/indireta",
+              "order": 8
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "centralização/descentralização",
+              "order": 9
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "desconcentração",
+              "order": 10
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "princípios",
+              "order": 11
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "órgãos e agentes",
+              "order": 12
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "Lei 8.112/1990",
+              "order": 13
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "processo administrativo",
+              "order": 14
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "poderes",
+              "order": 15
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "atos",
+              "order": 16
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "controles",
+              "order": 17
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "improbidade",
+              "order": 18
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "responsabilidade civil",
+              "order": 19
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "licitações e contratos",
+              "order": 20
+            },
+            {
+              "topic": "Direito Constitucional; Direito Administrativo",
+              "subtopic": "Estatuto da Pessoa com Deficiência.",
+              "order": 21
+            }
+          ]
+        },
+        {
+          "id": "A03",
+          "name": "Ética, regimento e organização judiciária",
+          "group": "Legislação interna",
+          "canonicalSubject": "Ética; Regimento Interno; Lei de Organização Judiciária",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "Ética e moral",
+              "order": 1
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "princípios e valores",
+              "order": 2
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "ética e democracia/cidadania",
+              "order": 3
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "ética e função pública",
+              "order": 4
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "ética no setor público",
+              "order": 5
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "Lei 8.112/1990 e regime disciplinar",
+              "order": 6
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "Lei 8.429/1992 e improbidade",
+              "order": 7
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "Código de Ética dos Servidores do TJDFT",
+              "order": 8
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "Regimento Interno com redação alterada",
+              "order": 9
+            },
+            {
+              "topic": "Ética; Regimento Interno; Lei de Organização Judiciária",
+              "subtopic": "Lei 11.697/2008 e alterações.",
+              "order": 10
+            }
+          ]
+        },
+        {
+          "id": "A04",
+          "name": "Gestão de pessoas e materiais",
+          "group": "Específico",
+          "canonicalSubject": "Gestão de pessoas; administração de materiais",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "Administração de pessoal e Recursos Humanos: recrutamento e seleção",
+              "order": 1
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "cargos e salários",
+              "order": 2
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "desempenho",
+              "order": 3
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "treinamento e desenvolvimento",
+              "order": 4
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "valorização",
+              "order": 5
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "gestão por competências",
+              "order": 6
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "indicadores",
+              "order": 7
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "planejamento organizacional",
+              "order": 8
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "administração de materiais",
+              "order": 9
+            },
+            {
+              "topic": "Gestão de pessoas; administração de materiais",
+              "subtopic": "estoques, classificação ABC, tempo de reposição, ponto de pedido, giro, custo, lote econômico e número de pedidos.",
+              "order": 10
+            }
+          ]
+        },
+        {
+          "id": "A05",
+          "name": "Gestão pública, governança e processos",
+          "group": "Específico",
+          "canonicalSubject": "Gestão pública; governança; gestão de processos",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Gestão pública; governança; gestão de processos",
+              "subtopic": "Administração Pública: estrutura administrativa, conceitos, elementos e poderes",
+              "order": 1
+            },
+            {
+              "topic": "Gestão pública; governança; gestão de processos",
+              "subtopic": "organização administrativa",
+              "order": 2
+            },
+            {
+              "topic": "Gestão pública; governança; gestão de processos",
+              "subtopic": "princípios",
+              "order": 3
+            },
+            {
+              "topic": "Gestão pública; governança; gestão de processos",
+              "subtopic": "governança pública, princípios, diretrizes, níveis e práticas",
+              "order": 4
+            },
+            {
+              "topic": "Gestão pública; governança; gestão de processos",
+              "subtopic": "gestão de processos, mapeamento, análise, melhoria e indicadores",
+              "order": 5
+            },
+            {
+              "topic": "Gestão pública; governança; gestão de processos",
+              "subtopic": "gestão de projetos, elaboração, avaliação, modelos, etapas e riscos.",
+              "order": 6
+            }
+          ]
+        },
+        {
+          "id": "A06",
+          "name": "Licitações, contratos e sustentabilidade",
+          "group": "Específico",
+          "canonicalSubject": "Licitações; contratos; sustentabilidade nas contratações",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Licitações; contratos; sustentabilidade nas contratações",
+              "subtopic": "Licitações e contratos administrativos",
+              "order": 1
+            },
+            {
+              "topic": "Licitações; contratos; sustentabilidade nas contratações",
+              "subtopic": "Lei 8.666/1993, Lei 14.133/2021 e alterações posteriores",
+              "order": 2
+            },
+            {
+              "topic": "Licitações; contratos; sustentabilidade nas contratações",
+              "subtopic": "fases, modalidades, dispensa e inexigibilidade",
+              "order": 3
+            },
+            {
+              "topic": "Licitações; contratos; sustentabilidade nas contratações",
+              "subtopic": "sustentabilidade das contratações",
+              "order": 4
+            },
+            {
+              "topic": "Licitações; contratos; sustentabilidade nas contratações",
+              "subtopic": "controle de versão normativa antes da aplicação.",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "id": "A07",
+          "name": "Língua Portuguesa",
+          "group": "Núcleo comum",
+          "canonicalSubject": "Língua Portuguesa",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "Elementos de construção do texto e sentido (gêneros",
+              "order": 1
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "interpretação",
+              "order": 2
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "organização interna)",
+              "order": 3
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "semântica",
+              "order": 4
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "morfologia",
+              "order": 5
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "sintaxe",
+              "order": 6
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "coesão",
+              "order": 7
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "ortografia",
+              "order": 8
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "acentuação",
+              "order": 9
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "crase",
+              "order": 10
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "pontuação",
+              "order": 11
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "reescrita (substituição, deslocamento, paralelismo)",
+              "order": 12
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "variação linguística e norma culta",
+              "order": 13
+            },
+            {
+              "topic": "Língua Portuguesa",
+              "subtopic": "leitura dos itens sob o ponto de vista textual.",
+              "order": 14
+            }
+          ]
+        },
+        {
+          "id": "A08",
+          "name": "Orçamento, responsabilidade fiscal e MCASP",
+          "group": "Específico",
+          "canonicalSubject": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "Poderes e deveres do Administrador Público",
+              "order": 1
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "improbidade",
+              "order": 2
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "responsabilidade civil da Administração",
+              "order": 3
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "controle interno, externo, pelos Tribunais de Contas e judicial",
+              "order": 4
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "processo administrativo disciplinar",
+              "order": 5
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "ética e Código de Conduta",
+              "order": 6
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "atos administrativos",
+              "order": 7
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "contratos administrativos, formalização, execução, direitos e obrigações, acompanhamento, inexecução, revisão, rescisão e suspensão",
+              "order": 8
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "LRF (metas, transparência, controle e fiscalização)",
+              "order": 9
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "orçamento",
+              "order": 10
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "receita e despesa",
+              "order": 11
+            },
+            {
+              "topic": "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+              "subtopic": "MCASP 9ª edição, Parte I.",
+              "order": 12
+            }
+          ]
+        },
+        {
+          "id": "A09",
+          "name": "Planejamento, indicadores e projetos",
+          "group": "Específico",
+          "canonicalSubject": "Planejamento; indicadores; gestão de projetos",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Planejamento; indicadores; gestão de projetos",
+              "subtopic": "Planejamento estratégico, tático e operacional",
+              "order": 1
+            },
+            {
+              "topic": "Planejamento; indicadores; gestão de projetos",
+              "subtopic": "análise de ambiente interno e externo",
+              "order": 2
+            },
+            {
+              "topic": "Planejamento; indicadores; gestão de projetos",
+              "subtopic": "Balanced Scorecard",
+              "order": 3
+            },
+            {
+              "topic": "Planejamento; indicadores; gestão de projetos",
+              "subtopic": "gestão de projetos",
+              "order": 4
+            },
+            {
+              "topic": "Planejamento; indicadores; gestão de projetos",
+              "subtopic": "elaboração, análise, avaliação, modelos, características, etapas e gestão de riscos",
+              "order": 5
+            },
+            {
+              "topic": "Planejamento; indicadores; gestão de projetos",
+              "subtopic": "relação entre planejamento, indicadores e governança.",
+              "order": 6
+            }
+          ]
+        },
+        {
+          "id": "A10",
+          "name": "Discursiva específica",
+          "group": "Discursiva",
+          "canonicalSubject": "Redação/dissertativa específica conforme o edital-base",
+          "sourceBase": "Edital 2022",
+          "sourceUrl": "https://conhecimento.fgv.br/sites/default/files/concursos/tjdft_-_edital_24-01-2022_0.pdf",
+          "items": [
+            {
+              "topic": "Redação/dissertativa específica conforme o edital-base",
+              "subtopic": "Prova discursiva do Analista: duas questões relativas a conhecimentos específicos, adequadas às atribuições da especialidade",
+              "order": 1
+            },
+            {
+              "topic": "Redação/dissertativa específica conforme o edital-base",
+              "subtopic": "treino de resposta, fundamentação, correção por critérios do edital, diagnóstico e reescrita. Nenhuma nota é criada sem resposta produzida e corrigida.",
+              "order": 2
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "trail": {
+    "total": 37,
+    "next": {
+      "code": "P03",
+      "title": "P03 — Sintaxe I: frase, oração, período, sujeito, predicado e núcleos",
+      "order": 3,
+      "track": "Português Primeiro",
+      "block": "B1",
+      "priority": "Muito alta",
+      "state": "Em aprendizagem",
+      "material_ready": true,
+      "d0": false,
+      "d7": false,
+      "d20": false,
+      "last_execution": "2026-10-02T00:00:00.000Z",
+      "next_review": null
+    },
+    "items": [
+      {
+        "code": "P01",
+        "title": "P01 — Classes gramaticais e função morfossintática",
+        "order": 1,
+        "track": "Português Primeiro",
+        "block": "B1",
+        "priority": "Muito alta",
+        "state": "Em consolidação",
+        "material_ready": true,
+        "d0": true,
+        "d7": false,
+        "d20": false,
+        "last_execution": "2026-09-28T00:00:00.000Z",
+        "next_review": "2026-10-05T00:00:00.000Z"
+      },
+      {
+        "code": "P02",
+        "title": "P02 — Morfologia: formação, flexão nominal e verbal, tempos e modos",
+        "order": 2,
+        "track": "Português Primeiro",
+        "block": "B1",
+        "priority": "Alta",
+        "state": "Em consolidação",
+        "material_ready": true,
+        "d0": true,
+        "d7": false,
+        "d20": false,
+        "last_execution": "2026-09-29T00:00:00.000Z",
+        "next_review": "2026-10-06T00:00:00.000Z"
+      },
+      {
+        "code": "P03",
+        "title": "P03 — Sintaxe I: frase, oração, período, sujeito, predicado e núcleos",
+        "order": 3,
+        "track": "Português Primeiro",
+        "block": "B1",
+        "priority": "Muito alta",
+        "state": "Em aprendizagem",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": "2026-10-02T00:00:00.000Z",
+        "next_review": null
+      },
+      {
+        "code": "RL01",
+        "title": "RL01 — Proposição, sentença aberta e valor lógico",
+        "order": 4,
+        "track": "RLM Preventivo",
+        "block": "B1",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P04",
+        "title": "P04 — Sintaxe II: complementos, predicativos, vozes verbais e partícula se",
+        "order": 5,
+        "track": "Português Primeiro",
+        "block": "B1",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV01",
+        "title": "REV01 — Revisão 01 — dias 1 a 5",
+        "order": 6,
+        "track": "Revisão integrada",
+        "block": "B1",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P05",
+        "title": "P05 — Coordenação, subordinação e conjunções",
+        "order": 7,
+        "track": "Português Primeiro",
+        "block": "B2",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P06",
+        "title": "P06 — Concordância verbal",
+        "order": 8,
+        "track": "Português Primeiro",
+        "block": "B2",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL02",
+        "title": "RL02 — Conectivos e tabelas-verdade",
+        "order": 9,
+        "track": "RLM Preventivo",
+        "block": "B2",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P07",
+        "title": "P07 — Concordância nominal",
+        "order": 10,
+        "track": "Português Primeiro",
+        "block": "B2",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P08",
+        "title": "P08 — Transitividade e regência verbal",
+        "order": 11,
+        "track": "Português Primeiro",
+        "block": "B2",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV02",
+        "title": "REV02 — Revisão 02 — dias 6 a 10 + retomada acumulada",
+        "order": 12,
+        "track": "Revisão integrada",
+        "block": "B2",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P09",
+        "title": "P09 — Regência nominal e emprego das preposições",
+        "order": 13,
+        "track": "Português Primeiro",
+        "block": "B3",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL03",
+        "title": "RL03 — Condicional, bicondicional e condição necessária/suficiente",
+        "order": 14,
+        "track": "RLM Preventivo",
+        "block": "B3",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P10",
+        "title": "P10 — Crase",
+        "order": 15,
+        "track": "Português Primeiro",
+        "block": "B3",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P11",
+        "title": "P11 — Pronomes, referenciação e colocação pronominal",
+        "order": 16,
+        "track": "Português Primeiro",
+        "block": "B3",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P12",
+        "title": "P12 — Pontuação baseada em sintaxe",
+        "order": 17,
+        "track": "Português Primeiro",
+        "block": "B3",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV03",
+        "title": "REV03 — Revisão 03 — dias 11 a 15 + últimos 15 dias estudados",
+        "order": 18,
+        "track": "Revisão integrada",
+        "block": "B3",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL04",
+        "title": "RL04 — Negações, equivalências e Leis de De Morgan",
+        "order": 19,
+        "track": "RLM Preventivo",
+        "block": "B4",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P13",
+        "title": "P13 — Coesão, conectores, referenciação e progressão textual",
+        "order": 20,
+        "track": "Português Primeiro",
+        "block": "B4",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P14",
+        "title": "P14 — Semântica, vocabulário e relações de sentido",
+        "order": 21,
+        "track": "Português Primeiro",
+        "block": "B4",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P15",
+        "title": "P15 — Reescrita, substituição, deslocamento e paralelismo",
+        "order": 22,
+        "track": "Português Primeiro",
+        "block": "B4",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL05",
+        "title": "RL05 — Quantificadores e negação de quantificadores",
+        "order": 23,
+        "track": "RLM Preventivo",
+        "block": "B4",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV04",
+        "title": "REV04 — Revisão 04 — dias 16 a 20 + retomada acumulada",
+        "order": 24,
+        "track": "Revisão integrada",
+        "block": "B4",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P16",
+        "title": "P16 — Ortografia e acentuação",
+        "order": 25,
+        "track": "Português Primeiro",
+        "block": "B5",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P17",
+        "title": "P17 — Gêneros e tipos textuais, interpretação e variação linguística",
+        "order": 26,
+        "track": "Português Primeiro",
+        "block": "B5",
+        "priority": "Média",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "P18",
+        "title": "P18 — Consolidação FGV/TJDFT + caderno de erros",
+        "order": 27,
+        "track": "Português Primeiro",
+        "block": "B5",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL06",
+        "title": "RL06 — Argumentação, validade, inferências e silogismos",
+        "order": 28,
+        "track": "RLM Preventivo",
+        "block": "B5",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL07",
+        "title": "RL07 — Conjuntos, diagramas de Venn e inclusão-exclusão",
+        "order": 29,
+        "track": "RLM Preventivo",
+        "block": "B5",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV05",
+        "title": "REV05 — Revisão 05 — dias 21 a 25 + retomada acumulada",
+        "order": 30,
+        "track": "Revisão integrada",
+        "block": "B5",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL08",
+        "title": "RL08 — Princípios aditivo e multiplicativo de contagem",
+        "order": 31,
+        "track": "RLM Preventivo",
+        "block": "B6",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL09",
+        "title": "RL09 — Permutação, arranjo e combinação",
+        "order": 32,
+        "track": "RLM Preventivo",
+        "block": "B6",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL10",
+        "title": "RL10 — Probabilidade básica",
+        "order": 33,
+        "track": "RLM Preventivo",
+        "block": "B6",
+        "priority": "Média",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL11",
+        "title": "RL11 — Sequências, padrões, PA e PG",
+        "order": 34,
+        "track": "RLM Preventivo",
+        "block": "B6",
+        "priority": "Manutenção",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL12",
+        "title": "RL12 — Ordenação, cruzamento de informações e problemas dedutivos",
+        "order": 35,
+        "track": "RLM Preventivo",
+        "block": "B6",
+        "priority": "Alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV06",
+        "title": "REV06 — Revisão 06 — dias 26 a 30 + últimos 30 dias estudados",
+        "order": 36,
+        "track": "Revisão integrada",
+        "block": "B6",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "RL13",
+        "title": "RL13 — Consolidação mista + saneamento do caderno de erros",
+        "order": 37,
+        "track": "RLM Preventivo",
+        "block": "Fechamento",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      }
+    ],
+    "formalReviews": [
+      {
+        "code": "REV01",
+        "title": "REV01 — Revisão 01 — dias 1 a 5",
+        "order": 6,
+        "track": "Revisão integrada",
+        "block": "B1",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV02",
+        "title": "REV02 — Revisão 02 — dias 6 a 10 + retomada acumulada",
+        "order": 12,
+        "track": "Revisão integrada",
+        "block": "B2",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV03",
+        "title": "REV03 — Revisão 03 — dias 11 a 15 + últimos 15 dias estudados",
+        "order": 18,
+        "track": "Revisão integrada",
+        "block": "B3",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV04",
+        "title": "REV04 — Revisão 04 — dias 16 a 20 + retomada acumulada",
+        "order": 24,
+        "track": "Revisão integrada",
+        "block": "B4",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV05",
+        "title": "REV05 — Revisão 05 — dias 21 a 25 + retomada acumulada",
+        "order": 30,
+        "track": "Revisão integrada",
+        "block": "B5",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      },
+      {
+        "code": "REV06",
+        "title": "REV06 — Revisão 06 — dias 26 a 30 + últimos 30 dias estudados",
+        "order": 36,
+        "track": "Revisão integrada",
+        "block": "B6",
+        "priority": "Muito alta",
+        "state": "Não estudado",
+        "material_ready": true,
+        "d0": false,
+        "d7": false,
+        "d20": false,
+        "last_execution": null,
+        "next_review": null
+      }
+    ]
+  },
+  "baseline": {
+    "questions": {
+      "total": 61,
+      "correct": 41,
+      "errors": 20,
+      "doubts": 0,
+      "annulled": 0,
+      "precision": 0.6721311475409836,
+      "by_subject": [
+        {
+          "subject": "Língua Portuguesa",
+          "total": 61,
+          "correct": 41,
+          "errors": 20,
+          "doubts": 0,
+          "annulled": 0,
+          "sessions": 2,
+          "precision": 0.6721311475409836
+        }
+      ],
+      "by_cargo": [
+        {
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Administração",
+          "total": 33,
+          "correct": 25,
+          "errors": 8,
+          "doubts": 0,
+          "annulled": 0,
+          "sessions": 1,
+          "precision": 0.7575757575757576
+        },
+        {
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "total": 28,
+          "correct": 16,
+          "errors": 12,
+          "doubts": 0,
+          "annulled": 0,
+          "sessions": 1,
+          "precision": 0.5714285714285714
+        }
+      ],
+      "by_unit": [
+        {
+          "code": "P01",
+          "total": 33,
+          "correct": 25,
+          "errors": 8,
+          "doubts": 0,
+          "annulled": 0,
+          "sessions": 1,
+          "precision": 0.7575757575757576
+        },
+        {
+          "code": "P02",
+          "total": 28,
+          "correct": 16,
+          "errors": 12,
+          "doubts": 0,
+          "annulled": 0,
+          "sessions": 1,
+          "precision": 0.5714285714285714
+        }
+      ],
+      "by_date": [
+        {
+          "date": "2026-09-28",
+          "total": 33,
+          "correct": 25,
+          "errors": 8,
+          "annulled": 0
+        },
+        {
+          "date": "2026-09-29",
+          "total": 28,
+          "correct": 16,
+          "errors": 12,
+          "annulled": 0
+        }
+      ],
+      "by_subject_date": [
+        {
+          "subject": "Língua Portuguesa",
+          "date": "2026-09-28",
+          "total": 33,
+          "correct": 25,
+          "errors": 8,
+          "annulled": 0
+        },
+        {
+          "subject": "Língua Portuguesa",
+          "date": "2026-09-29",
+          "total": 28,
+          "correct": 16,
+          "errors": 12,
+          "annulled": 0
+        }
+      ],
+      "by_cargo_date": [
+        {
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Administração",
+          "date": "2026-09-28",
+          "total": 33,
+          "correct": 25,
+          "errors": 8,
+          "annulled": 0
+        },
+        {
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "date": "2026-09-29",
+          "total": 28,
+          "correct": 16,
+          "errors": 12,
+          "annulled": 0
+        }
+      ]
+    },
+    "errors": {
+      "activeCount": 12,
+      "bySubject": [
+        {
+          "subject": "Língua Portuguesa",
+          "count": 12
+        }
+      ],
+      "top": [
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Particípio e formas nominais",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-06T00:00:00.000Z",
+          "review_kind": "Posterior",
+          "action": "Reconhecer o particípio em tempos compostos: auxiliar ter/haver + particípio, como “tinha estudado”. Diferenciar de infinitivo e gerúndio.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "occurred_at": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Indicativo × subjuntivo",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-06T00:00:00.000Z",
+          "review_kind": "Posterior",
+          "action": "Em estruturas hipotéticas com “se”, reconhecer o pretérito imperfeito do subjuntivo: se estudasse, passaria. Indicativo tende a apresentar fato como mais assertivo; subjuntivo marca hipótese, possibilidade, desejo ou condição.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "occurred_at": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Pretérito perfeito × pretérito imperfeito",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-06T00:00:00.000Z",
+          "review_kind": "Posterior",
+          "action": "Usar o valor aspectual: imperfeito tende a duração, hábito ou pano de fundo; perfeito tende a evento delimitado/concluído. Em “estudava quando tocou”, “estudava” é imperfeito.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "occurred_at": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Derivação sufixal × flexão",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-06T00:00:00.000Z",
+          "review_kind": "Posterior",
+          "action": "Separar criação lexical de flexão: real → realidade cria novo substantivo por sufixação; servidor → servidores altera apenas número e é flexão.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "occurred_at": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Futuro do pretérito — valores modais",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-06T00:00:00.000Z",
+          "review_kind": "Posterior",
+          "action": "Reconhecer que o futuro do pretérito não marca só tempo: em pedidos como “gostaria” e “poderia”, ele pode atenuar a formulação e produzir polidez.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "occurred_at": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Tempo verbal × valor contextual",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-06T00:00:00.000Z",
+          "review_kind": "Posterior",
+          "action": "Separar forma morfológica de valor contextual: “amanhã viajo” está no presente com valor futuro; “onde estará?” está no futuro do presente com valor conjectural.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "occurred_at": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Infinitivo pessoal",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-06T00:00:00.000Z",
+          "review_kind": "Posterior",
+          "action": "Quando o infinitivo explicita o sujeito e flexiona pessoa/número, reconhecer infinitivo pessoal: estudarmos, sairmos, revisarem.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Apoio Especializado — Administração",
+          "occurred_at": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "state": "Em revisão",
+          "subject": "Língua Portuguesa",
+          "topic": "Só: advérbio × adjetivo",
+          "pattern": null,
+          "causes": null,
+          "severity": null,
+          "recurrence": 0,
+          "review_at": "2026-10-05T00:00:00.000Z",
+          "review_kind": "Consolidação",
+          "action": "Fixar: só = somente → advérbio invariável; sós = sozinhos → adjetivo, com concordância.",
+          "cargo": "Técnico Judiciário — Área Administrativa + Analista Judiciário — Administração",
+          "occurred_at": "2026-09-28T00:00:00.000Z"
+        }
+      ]
+    },
+    "reviews": {
+      "dated": [
+        {
+          "type": "QUESTÃO",
+          "title": "Substantivação",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Pronome relativo",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Bastante como advérbio invariável",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Meio como advérbio invariável",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Substantivação",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Só: advérbio × adjetivo",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Muito como advérbio invariável",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Classe gramatical × função sintática",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "ERRO",
+          "title": "Só: advérbio × adjetivo",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Consolidação"
+        },
+        {
+          "type": "ERRO",
+          "title": "Advérbios invariáveis: muito, meio e bastante",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Consolidação"
+        },
+        {
+          "type": "ERRO",
+          "title": "Substantivação",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Consolidação"
+        },
+        {
+          "type": "ERRO",
+          "title": "Classe gramatical × função sintática",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Consolidação"
+        },
+        {
+          "type": "ERRO",
+          "title": "Pronome relativo × conjunção integrante",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-05T00:00:00.000Z",
+          "origin": "Consolidação"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Tempo verbal × valor contextual",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Pretérito imperfeito",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Futuro do pretérito — polidez/atenuação",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Futuro do pretérito — polidez/atenuação",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Infinitivo pessoal",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Infinitivo pessoal",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Pretérito imperfeito do subjuntivo",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Particípio em forma verbal composta",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Derivação sufixal e mudança de classe",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Futuro do pretérito — polidez/atenuação",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Infinitivo pessoal",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "QUESTÃO",
+          "title": "Futuro do presente — conjectura",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Revisão posterior"
+        },
+        {
+          "type": "ERRO",
+          "title": "Particípio e formas nominais",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Posterior"
+        },
+        {
+          "type": "ERRO",
+          "title": "Indicativo × subjuntivo",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Posterior"
+        },
+        {
+          "type": "ERRO",
+          "title": "Pretérito perfeito × pretérito imperfeito",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Posterior"
+        },
+        {
+          "type": "ERRO",
+          "title": "Derivação sufixal × flexão",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Posterior"
+        },
+        {
+          "type": "ERRO",
+          "title": "Futuro do pretérito — valores modais",
+          "subject": "Língua Portuguesa",
+          "date": "2026-10-06T00:00:00.000Z",
+          "origin": "Posterior"
+        }
+      ],
+      "formal": [
+        {
+          "code": "REV01",
+          "title": "REV01 — Revisão 01 — dias 1 a 5",
+          "order": 6,
+          "state": "Não estudado"
+        },
+        {
+          "code": "REV02",
+          "title": "REV02 — Revisão 02 — dias 6 a 10 + retomada acumulada",
+          "order": 12,
+          "state": "Não estudado"
+        },
+        {
+          "code": "REV03",
+          "title": "REV03 — Revisão 03 — dias 11 a 15 + últimos 15 dias estudados",
+          "order": 18,
+          "state": "Não estudado"
+        },
+        {
+          "code": "REV04",
+          "title": "REV04 — Revisão 04 — dias 16 a 20 + retomada acumulada",
+          "order": 24,
+          "state": "Não estudado"
+        },
+        {
+          "code": "REV05",
+          "title": "REV05 — Revisão 05 — dias 21 a 25 + retomada acumulada",
+          "order": 30,
+          "state": "Não estudado"
+        },
+        {
+          "code": "REV06",
+          "title": "REV06 — Revisão 06 — dias 26 a 30 + últimos 30 dias estudados",
+          "order": 36,
+          "state": "Não estudado"
+        }
+      ]
+    },
+    "coverage": {
+      "tecnico": {
+        "matrix": 12,
+        "produced": null,
+        "available": null,
+        "mapped": 0,
+        "studied": 0,
+        "evidence": 1,
+        "practiced_questions": 61,
+        "consolidated": 0,
+        "subjects": [
+          "Administração Pública; gestão de pessoas; orçamento público",
+          "Direito Administrativo",
+          "Direito Civil; Lei de Introdução às Normas do Direito Brasileiro",
+          "Direito Constitucional",
+          "Direito Penal",
+          "Direito Processual Civil",
+          "Direito Processual Penal",
+          "Licitações; contratos; compras públicas",
+          "Língua Portuguesa",
+          "Provimento Geral da Corregedoria; Provimento Judicial aplicado ao PJe",
+          "Redação/dissertativa conforme o edital-base",
+          "Ética; Regimento Interno; Lei de Organização Judiciária"
+        ]
+      },
+      "analista": {
+        "matrix": 10,
+        "produced": null,
+        "available": null,
+        "mapped": 0,
+        "studied": 0,
+        "evidence": 1,
+        "practiced_questions": 61,
+        "consolidated": 0,
+        "subjects": [
+          "Administração geral; comportamento organizacional",
+          "Direito Constitucional; Direito Administrativo",
+          "Gestão de pessoas; administração de materiais",
+          "Gestão pública; governança; gestão de processos",
+          "Licitações; contratos; sustentabilidade nas contratações",
+          "Língua Portuguesa",
+          "Orçamento público; Lei de Responsabilidade Fiscal; MCASP",
+          "Planejamento; indicadores; gestão de projetos",
+          "Redação/dissertativa específica conforme o edital-base",
+          "Ética; Regimento Interno; Lei de Organização Judiciária"
+        ]
+      },
+      "cargos": [
+        "Técnico Judiciário — Área Administrativa — sem especialidade",
+        "Analista Judiciário — Apoio Especializado — Administração"
+      ]
+    },
+    "continuity": {
+      "active": {
+        "type": "Questões",
+        "activity": "L01 · QUEST · Constituição Federal de 1988",
+        "day": "LPD-TJDFT-20261002-L01-NC",
+        "state": "Em andamento",
+        "status": "Em execução",
+        "subject": "Noções de Direito Constitucional",
+        "date": "2026-10-02T00:00:00.000Z",
+        "planned_date": null,
+        "minutes": null,
+        "questions": null,
+        "next_action": "Responder os 30 itens C/E da L01"
+      },
+      "activities_with_evidence": 6,
+      "minutes": null,
+      "questions": null
+    },
+    "integrity": {
+      "duplicate_trail_orders": 0,
+      "missing_trail_orders": 0,
+      "unclassified_errors": 0,
+      "invalid_times": 0,
+      "uncorrected_question_rows": 0,
+      "sequence_valid": true
+    }
+  },
+  "importedSessions": [
+    {
+      "id": "import-P01",
+      "origin": "tjdft-dashboard",
+      "code": "P01",
+      "date": "2026-09-28",
+      "questions": 33,
+      "correct": 25,
+      "errors": 8,
+      "minutes": null
+    },
+    {
+      "id": "import-P02",
+      "origin": "tjdft-dashboard",
+      "code": "P02",
+      "date": "2026-09-29",
+      "questions": 28,
+      "correct": 16,
+      "errors": 12,
+      "minutes": null
+    }
+  ],
+  "scoringPolicy": {
+    "version": "lab-1",
+    "experimental": true,
+    "description": "Score experimental; não representa incidência histórica oficial.",
+    "weights": {
+      "editorialPriority": 0.45,
+      "weakness": 0.35,
+      "reviewUrgency": 0.2
+    },
+    "editorialPriorityScale": {
+      "Muito alta": 0.95,
+      "Alta": 0.8,
+      "Média": 0.62,
+      "Manutenção": 0.42
+    },
+    "unknownWeakness": 0.55
+  }
+}
