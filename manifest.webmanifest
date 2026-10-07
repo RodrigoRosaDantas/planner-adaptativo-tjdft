@@ -1,0 +1,9 @@
+{
+  "name": "Planner Adaptativo TJDFT — Lab",
+  "short_name": "TJDFT Lab",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#0f172a",
+  "description": "Laboratório adaptativo de estudos para o TJDFT."
+}
