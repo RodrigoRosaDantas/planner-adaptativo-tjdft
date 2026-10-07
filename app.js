@@ -290,6 +290,7 @@
     if (best) {
       $("#focusTitle").textContent = best.item.code + " · " + best.item.title.replace(/^\w+\s+—\s+/, "");
       $("#focusScore").textContent = best.score;
+      $("#focusScore").style.setProperty("--score", best.score);
       $("#focusReason").textContent = reason(best);
       $("#focusBreakdown").innerHTML =
         scoreBox("Prioridade", Math.round(best.priority * 100)) +
@@ -298,6 +299,7 @@
       $("#focusStudyBtn").dataset.code = best.item.code;
     }
 
+    renderTodayStrip();
     renderWeeklyGoal();
     renderAdaptiveQueue();
     renderReviewList();
@@ -307,6 +309,33 @@
 
   function scoreBox(label, value) {
     return '<div class="score-item"><strong>' + value + '</strong><span>' + esc(label) + '</span></div>';
+  }
+
+  function renderTodayStrip() {
+    const ranked = rankedTrail();
+    const now = ranked[0];
+    const next = ranked[1];
+    const review = getPendingReviews()[0] || null;
+    const week = currentWeekSessions();
+    const weekStats = globalStats(week);
+
+    if (now) {
+      $("#todayNow").textContent = now.item.code + " · " + now.item.title.replace(/^\w+\s+—\s+/, "");
+      $("#todayNowMeta").textContent = "score " + now.score + " · " + reason(now);
+    }
+    if (next) {
+      $("#todayNext").textContent = next.item.code + " · " + next.item.title.replace(/^\w+\s+—\s+/, "");
+      $("#todayNextMeta").textContent = "score " + next.score + " · " + (next.accuracy == null ? "sem medida" : percent(next.accuracy));
+    }
+    if (review) {
+      $("#todayReview").textContent = review.item.code + " · " + review.label;
+      $("#todayReviewMeta").textContent = review.due < 0 ? Math.abs(review.due) + "d atrasada" : review.due === 0 ? "vence hoje" : "em " + review.due + "d";
+    } else {
+      $("#todayReview").textContent = "Nenhuma revisão crítica";
+      $("#todayReviewMeta").textContent = "D0/D7/D20 em dia";
+    }
+    $("#todayPace").textContent = week.length + " sessões · " + hours(weekStats.minutes);
+    $("#todayPaceMeta").textContent = weekStats.questions + " questões nesta semana";
   }
 
   function renderWeeklyGoal() {
@@ -339,7 +368,7 @@
       return '<div class="queue-item">' +
         '<div class="queue-score">' + entry.score + '</div>' +
         '<div><strong>' + esc(entry.item.code + " · " + entry.item.title.replace(/^\w+\s+—\s+/, "")) + '</strong><small>' + esc(reason(entry)) + '</small></div>' +
-        '<span class="status-pill ' + tone + '">' + esc(label) + '</span>' +
+        '<div class="queue-actions"><span class="status-pill ' + tone + '">' + esc(label) + '</span><button class="quick-action quick-study" data-code="' + esc(entry.item.code) + '">Abrir</button></div>' +
         '</div>';
     }).join("");
   }
@@ -364,7 +393,7 @@
     $("#reviewList").innerHTML = rows.length ? rows.map((row) => {
       const status = row.due < 0 ? Math.abs(row.due) + "d atrasada" : row.due === 0 ? "hoje" : "em " + row.due + "d";
       const tone = row.due <= 0 ? "red" : row.due <= 2 ? "amber" : "blue";
-      return '<div class="review-item"><div><strong>' + esc(row.item.code + " · " + row.label) + '</strong><small>' + esc(row.item.title.replace(/^\w+\s+—\s+/, "")) + ' · ' + fmtDate(row.date) + '</small></div><span class="status-pill ' + tone + '">' + status + '</span></div>';
+      return '<div class="review-item"><div><strong>' + esc(row.item.code + " · " + row.label) + '</strong><small>' + esc(row.item.title.replace(/^\w+\s+—\s+/, "")) + ' · ' + fmtDate(row.date) + '</small></div><div class="review-actions"><span class="status-pill ' + tone + '">' + status + '</span><button class="quick-action quick-review" data-code="' + esc(row.item.code) + '" data-review="' + esc(row.label) + '">Revisar</button></div></div>';
     }).join("") : '<div class="empty">Nenhuma revisão calculável ainda.</div>';
   }
 
@@ -888,6 +917,24 @@
     $("#heroRegisterBtn").addEventListener("click", () => openView("register"));
     $("#focusStudyBtn").addEventListener("click", (e) => {
       $("#studyUnit").value = e.currentTarget.dataset.code || state.seed.trail.items[0].code;
+      syncUnitSubject("#studyUnit", "#studySubject");
+      openView("register");
+    });
+
+    $("#adaptiveQueue").addEventListener("click", (e) => {
+      const btn = e.target.closest(".quick-study");
+      if (!btn) return;
+      $("#studyCategory").value = "Estudo";
+      $("#studyUnit").value = btn.dataset.code;
+      syncUnitSubject("#studyUnit", "#studySubject");
+      openView("register");
+    });
+
+    $("#reviewList").addEventListener("click", (e) => {
+      const btn = e.target.closest(".quick-review");
+      if (!btn) return;
+      $("#studyCategory").value = "Revisão " + btn.dataset.review;
+      $("#studyUnit").value = btn.dataset.code;
       syncUnitSubject("#studyUnit", "#studySubject");
       openView("register");
     });
