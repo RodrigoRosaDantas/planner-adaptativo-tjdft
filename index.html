@@ -7,7 +7,7 @@
   <meta name="description" content="Planner adaptativo de estudos para o TJDFT — Técnico e Analista Administrativo." />
   <title>Planner TJDFT — Laboratório Adaptativo</title>
   <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="stylesheet" href="./styles.css?v=20261007-3" />
+  <link rel="stylesheet" href="./styles.css?v=20261007-4" />
 </head>
 <body>
   <div class="app">
@@ -70,6 +70,29 @@
             <p>O sistema cruza prioridade estratégica, desempenho, revisões D0/D7/D20 e sua trilha real para indicar o melhor próximo passo.</p>
           </div>
           <button class="primary" id="heroRegisterBtn">Registrar estudo</button>
+        </div>
+
+        <div class="today-strip" id="todayStrip">
+          <div class="today-step primary-step">
+            <span>AGORA</span>
+            <strong id="todayNow">Calculando prioridade…</strong>
+            <small id="todayNowMeta">—</small>
+          </div>
+          <div class="today-step">
+            <span>DEPOIS</span>
+            <strong id="todayNext">—</strong>
+            <small id="todayNextMeta">—</small>
+          </div>
+          <div class="today-step">
+            <span>REVISAR</span>
+            <strong id="todayReview">—</strong>
+            <small id="todayReviewMeta">—</small>
+          </div>
+          <div class="today-step">
+            <span>RITMO</span>
+            <strong id="todayPace">—</strong>
+            <small id="todayPaceMeta">esta semana</small>
+          </div>
         </div>
 
         <div class="metrics" id="overviewMetrics"></div>
@@ -337,6 +360,6 @@
   </div>
 
   <div id="toast" class="toast" aria-live="polite"></div>
-  <script src="./app.js?v=20261007-3" defer></script>
+  <script src="./app.js?v=20261007-4" defer></script>
 </body>
 </html>
