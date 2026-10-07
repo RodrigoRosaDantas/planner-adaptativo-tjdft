@@ -67,18 +67,6 @@ button{cursor:pointer}
 .card-head.compact{align-items:center}
 .subtle{color:var(--muted);font-size:11px;line-height:1.6}
 .score-badge{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#f2f0ff;border:7px solid #dcd7ff;font-size:18px;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums;flex:0 0 auto}
-.score-badge:before{content:"";position:absolute;inset:6px;background:#fff;border-radius:50%}
-.score-badge{isolation:isolate}
-.score-badge>*{position:relative}
-.score-badge{line-height:1}
-.score-badge::after{content:"";position:absolute;inset:0;border-radius:50%}
-.score-badge{z-index:0}
-.score-badge{color:var(--accent)}
-.score-badge{font-variant-numeric:tabular-nums}
-.score-badge{display:grid}
-.score-badge{place-items:center}
-.score-badge{overflow:hidden}
-.score-badge{background:#f2f0ff;border:7px solid #dcd7ff}
 .score-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
 .score-item{background:var(--panel-2);border:1px solid var(--line);border-radius:11px;padding:10px}
 .score-item strong{display:block;font-size:17px}
